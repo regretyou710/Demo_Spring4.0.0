@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- <bean>:定義spring所管理的一個對象 id:該對象的唯一標示，注意：不能重複，在通過類型獲取bean的過程中可以不設置 class:此對象所屬類的全限定名 -->
+	<bean id="person" class="tw.com.spring.model.Person">
+		<!-- <property>:為對象的某個屬性賦值 name:屬性名 value:屬性值 -->
+		<property name="ID" value="1111"></property>
+		<property name="name" value="小明"></property>
+	</bean>
+
+	<bean id="person2" class="tw.com.spring.model.Person">
+		<property name="ID" value="2222"></property>
+		<property name="name" value="小紅"></property>
+	</bean>
+</beans>
