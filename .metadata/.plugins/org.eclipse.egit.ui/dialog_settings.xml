@@ -21,5 +21,29 @@
 		<item key="sortItemState" value="false"/>
 	</section>
 	<section name="GitCommitMessageComponent">
+		<list key="C:\Demo_Spring4.0.0\.git">
+			<item value="empty"/>
+		</list>
+		<list key="C:\Demo_Spring4.0.0\Demo03_Spring簡單案例1\.git">
+			<item value="empty"/>
+		</list>
+	</section>
+	<section name="org.eclipse.egit.ui.internal.push.PushResultDialog.dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="279"/>
+		<item key="DIALOG_Y_ORIGIN" value="92"/>
+		<item key="DIALOG_WIDTH" value="666"/>
+		<item key="DIALOG_HEIGHT" value="458"/>
+		<item key="DIALOG_FONT_NAME" value="1|Microsoft JhengHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft JhengHei UI"/>
+		<list key="sashWeights">
+			<item value="600"/>
+			<item value="400"/>
+		</list>
+	</section>
+	<section name="org.eclipse.egit.ui.internal.dialogs.MergeTargetSelectionDialog.dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="421"/>
+		<item key="DIALOG_Y_ORIGIN" value="8"/>
+		<item key="DIALOG_WIDTH" value="538"/>
+		<item key="DIALOG_HEIGHT" value="672"/>
+		<item key="DIALOG_FONT_NAME" value="1|Microsoft JhengHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft JhengHei UI"/>
 	</section>
 </section>

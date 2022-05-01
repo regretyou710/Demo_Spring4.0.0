@@ -10,7 +10,6 @@
 </mappings>
 </org.eclipse.team.ui.MODEL_PARTICIPANT_MAPPINGS>
 </org.eclipse.team.ui.MODEL_PARTICIPANT_SETTINGS>
-<gitSynchronizeData container="C:/Demo_Spring4.0.0/Demo03_SpringÂ²³æ®×¨Ò2" dstRev="refs/remotes/origin/master" inludeLocal="true" srcRev="HEAD"/>
 </data>
 </participant>
 </syncparticipants>
