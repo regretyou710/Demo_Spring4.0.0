@@ -3,7 +3,7 @@ package tw.com.ioc.life;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
-// bean後處理器
+// bean後置處理器
 public class AfterHandler implements BeanPostProcessor {
 
 	// 初始化前
