@@ -2,7 +2,10 @@
 <aop-reference-model>
 <aop-project name="Demo09-02_集合屬性賦值"/>
 <aop-project name="Demo05_Spring配置介紹"/>
+<aop-project name="Demo11_FactoryBean"/>
 <aop-project name="Demo06_注入方式"/>
+<aop-project name="Demo13_bean的作用域"/>
+<aop-project name="Demo10_集合類型的bean"/>
 <aop-project name="Demo07_p命名空間"/>
 <aop-project name="Demo03_Spring簡單案例1"/>
 <aop-project name="Demo04_Spring簡單案例2"/>
