@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<bean id="s1" class="tw.com.spring.di.Student">
+		<!-- spring屬性注入(賦值)方式一 -->
+		<!-- property標籤透過反射機制找到class set方法(還原方法名稱)賦值 -->
+		<property name="id" value="10010"></property>
+		<property name="name" value="張三"></property>
+		<property name="age" value="23"></property>
+		<property name="sex" value="男"></property>
+	</bean>
+
+	<bean id="s2" class="tw.com.spring.di.Student">
+		<!-- spring屬性注入(賦值)方式二 -->
+		<!-- 透過類的構造函數注入 -->
+		<constructor-arg value="10086"></constructor-arg>
+		<constructor-arg value="李四"></constructor-arg>
+		<constructor-arg value="20"></constructor-arg>
+		<constructor-arg value="女"></constructor-arg>
+	</bean>
+
+	<bean id="s3" class="tw.com.spring.di.Student">
+		<!-- spring屬性注入(賦值)方式三 -->
+		<!-- 透過類的構造函數注入(指定參數與參數具體類型) -->
+		<constructor-arg value="10022"></constructor-arg>
+		<constructor-arg value="王五"></constructor-arg>
+		<constructor-arg value="93" index="2"
+			type="java.lang.Double">
+		</constructor-arg>
+		<constructor-arg value="女"></constructor-arg>
+	</bean>
+
+	<!-- 透過xml文檔引入p命名空間注入 -->
+	<bean id="s4" class="tw.com.spring.di.Student" p:id="10033"
+		p:name="趙六" p:age="26" p:sex="男"></bean>
+</beans>
