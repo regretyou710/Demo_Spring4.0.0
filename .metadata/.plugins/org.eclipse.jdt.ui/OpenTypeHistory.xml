@@ -2,4 +2,5 @@
 <typeInfoHistroy>
 <typeInfo handle="=Demo05_Spring配置介紹/lib\/spring-beans-4.0.0.RELEASE.jar&lt;org.springframework.beans.factory(BeanFactory.class[BeanFactory" modifiers="1537" timestamp="1651311123763"/>
 <typeInfo handle="=Demo11_FactoryBean/lib\/spring-beans-4.0.0.RELEASE.jar&lt;org.springframework.beans.factory(FactoryBean.class[FactoryBean" modifiers="1537" timestamp="1651311123763"/>
+<typeInfo handle="=Demo15_bean的後置處理器/lib\/spring-context-4.0.0.RELEASE.jar&lt;org.springframework.context.support(PostProcessorRegistrationDelegate$BeanPostProcessorChecker.class[BeanPostProcessorChecker" modifiers="10" timestamp="1651407505800"/>
 </typeInfoHistroy>
