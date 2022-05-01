@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<bean id="s1" class="tw.com.spring.di.Student">
+		<!-- spring屬性注入(賦值)方式一 -->
+		<!-- property標籤透過反射機制找到class set方法(還原方法名稱)賦值 -->
+		<property name="id" value="10010"></property>
+		<property name="name" value="張三"></property>
+		<property name="age" value="23"></property>
+		<property name="sex" value="男"></property>
+	</bean>
+
+	<bean id="s2" class="tw.com.spring.di.Student">
+		<!-- spring屬性注入(賦值)方式二 -->
+		<!-- 透過類的構造函數注入 -->
+		<constructor-arg value="10086"></constructor-arg>
+		<constructor-arg value="李四"></constructor-arg>
+		<constructor-arg value="20"></constructor-arg>
+		<constructor-arg value="女"></constructor-arg>
+	</bean>
+
+	<bean id="s3" class="tw.com.spring.di.Student">
+		<!-- spring屬性注入(賦值)方式三 -->
+		<!-- 透過類的構造函數注入(指定參數與參數具體類型) -->
+		<constructor-arg value="10022"></constructor-arg>
+		<constructor-arg value="王五"></constructor-arg>
+		<constructor-arg value="93" index="2"
+			type="java.lang.Double">
+		</constructor-arg>
+		<constructor-arg value="女"></constructor-arg>
+	</bean>
+
+	<!-- 透過xml文檔引入p命名空間注入 -->
+	<bean id="s4" class="tw.com.spring.di.Student" p:id="10033"
+		p:name="趙六" p:age="26" p:sex="男"></bean>
+
+	<bean id="s5" class="tw.com.spring.di.Student">
+		<!-- 使用ref -->
+		<property name="id" value="10055"></property>
+		<property name="name" value="張三三"></property>
+		<property name="age" value="23"></property>
+		<property name="sex" value="男"></property>
+		<property name="teacher" ref="teacher"></property>
+	</bean>
+
+	<bean id="teacher" class="tw.com.spring.di.Teacher">
+		<property name="tid" value="10000"></property>
+		<property name="tname" value="小明"></property>
+	</bean>
+
+	<bean id="s6" class="tw.com.spring.di.Student" p:id="10073"
+		p:name="陳七" p:age="16" p:sex="男" p:teacher-ref="teacher"></bean>
+
+	<!-- ref的集聯屬性注入 -->
+	<bean id="s7" class="tw.com.spring.di.Student">
+		<!-- 使用ref -->
+		<property name="id" value="10016"></property>
+		<property name="name" value="趙十二"></property>
+		<property name="age" value="32"></property>
+		<property name="sex" value="男"></property>
+		<property name="teacher" ref="t2"></property>
+		<property name="teacher.tid" value="10002"></property>
+		<property name="teacher.tname" value="大明"></property>
+	</bean>
+
+	<bean id="t2" class="tw.com.spring.di.Teacher">
+	</bean>
+
+	<!-- 內部bean -->
+	<bean id="s8" class="tw.com.spring.di.Student">
+		<property name="id" value="10066"></property>
+		<property name="name" value="崔八"></property>
+		<property name="age" value="23"></property>
+		<property name="sex" value="男"></property>
+		<property name="teacher">
+			<bean id="tt" class="tw.com.spring.di.Teacher">
+				<property name="tid" value="2222"></property>
+				<property name="tname" value="admin"></property>
+			</bean>
+		</property>
+	</bean>
+
+	<!-- 定義在某個bean內部的bean，只能在當前bean中使用 -->
+	<!-- 
+	<bean id="s8" class="tw.com.spring.di.Student">
+		<property name="id" value="10066"></property>
+		<property name="name" value="崔八"></property>
+		<property name="age" value="23"></property>
+		<property name="sex" value="男"></property>
+		<property name="teacher" ref="tt"></property>
+	</bean>
+	 -->
+
+	<!-- 集合屬性注入 -->
+	<bean id="t3" class="tw.com.spring.di.Teacher">
+		<property name="tid" value="0000"></property>
+		<property name="tname" value="宋老師"></property>
+		<property name="cls">
+			<list>
+				<value>A</value>
+				<value>B</value>
+				<value>C</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 集合屬性注入 -->
+	<bean id="t4" class="tw.com.spring.di.Teacher">
+		<property name="tid" value="0001"></property>
+		<property name="tname" value="李老師"></property>
+		<property name="students">
+			<list>
+				<!-- 使用ref -->
+				<ref bean="s1"/>
+				<ref bean="s2"/>
+				<!-- 使用內部bean -->
+				<bean class="tw.com.spring.di.Student">
+					<property name="id" value="10041"></property>
+					<property name="name" value="方妮"></property>
+					<property name="age" value="23"></property>
+					<property name="sex" value="女"></property>					
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 集合屬性注入(Map) -->
+	<bean id="t5" class="tw.com.spring.di.Teacher">
+		<property name="tid" value="0005"></property>
+		<property name="tname" value="莊老師"></property>
+		<property name="bossMap">
+			<map>
+				<entry>
+					<key>
+						<value>2001</value>
+					</key>
+					<value>陳老師</value>
+				</entry>
+				<entry>
+					<key>
+						<value>2002</value>
+					</key>
+					<value>林老師</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>
+
