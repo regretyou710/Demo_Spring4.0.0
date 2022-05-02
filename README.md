@@ -131,3 +131,144 @@
 >		<constructor-arg value= "20.2" index ="3" type="java.lang.Double" />
 >	</bean >
 >```
+>#### 2.3.2  p名稱空間
+>&nbsp;&nbsp;&nbsp;&nbsp;為了簡化XML文件的配置，越來越多的XML文件採用屬性而非子元素配置信息。 Spring	從2.5版本開始引入了一個新的p命名空間，可以通過<bean>元素屬性的方式配置Bean	的屬性。使用p命名空間後，基於XML的配置方式將進一步簡化。
+>```
+><bean 
+>	id="studentSuper" 
+>	class="com.atguigu.helloworld.bean.Student"
+>	p:studentId="2002" p:stuName="Jerry2016" p:age="18" />
+>```
+>#### 2.3.3 可以使用的值
+>	1. 字面量
+>		1.1 可以使用字符串表示的值，可以通過value屬性或value子節點的方式指定  
+>		1.2 基本數據類型及其封裝類、String等類型都可以採取字面值注入的方式  
+>		1.3 若字面值中包含特殊字符，可以使用<strong>&lt;![CDATA[]]&gt;</strong>把字面值包裹起來
+>	2. null值
+>```
+>	<bean class="com.atguigu.spring.bean.Book" id="bookNull" >
+>		<property name= "bookId" value ="2000"/>
+>		<property name= "bookName">
+>		<null/>
+>		</property>
+>		<property name= "author" value ="nullAuthor"/>
+>		<property name= "price" value ="50"/>
+>	</bean >
+>```
+>	3. 給bean的級聯屬性賦值
+>```
+>	<bean id="action" class="com.atguigu.spring.ref.Action">
+>		<property name="service" ref="service"/>
+>		<!-- 設置級聯屬性(了解) -->
+>		<property name="service.dao.dataSource" value="DBCP"/>
+>	</bean>
+>```
+>	4. 外部已聲明的bean、引用其他的bean
+>```
+>	<bean id="shop" class="com.atguigu.spring.bean.Shop" >
+>		<property name= "book" ref ="book"/>
+>	</bean >
+>```
+>	5. 內部bean  
+>&nbsp;&nbsp;&nbsp;&nbsp;當bean實例僅僅給一個特定的屬性使用時，可以將其聲明為內部bean。內部bean聲明直接包含在<property>或<constructor-arg>元素裡，不需要設置任何id或name屬性  
+>&nbsp;&nbsp;&nbsp;&nbsp;內部bean不能使用在任何其他地方
+>```
+>	<bean id="shop2" class="com.atguigu.spring.bean.Shop" >
+>		<property name= "book">
+>			<bean class= "com.atguigu.spring.bean.Book" >
+>				<property name= "bookId" value ="1000"/>
+>				<property name= "bookName" value="innerBook" />
+>				<property name= "author" value="innerAuthor" />
+>				<property name= "price" value ="50"/>
+>			</bean>
+>		</property>
+>	</bean >
+>```
+	
+### 2.4 集合屬性
+&nbsp;&nbsp;&nbsp;&nbsp;在Spring中可以通過一組內置的XML標籤來配置集合屬性，例如：\<list\>，\<set\>或\<map\>。
+>#### 2.4.1 數組和List
+>&nbsp;&nbsp;&nbsp;&nbsp;配置java.util.List類型的屬性，需要指定\<list\>標籤，在標籤裡包含一些元素。這些標籤可以通過\<value\>指定簡單的常量值，通過\<ref\>指定對其他Bean的引用。通過\<bean\>指定內置bean定義。通過\<null/\>指定空元素。甚至可以內嵌其他集合。  
+>&nbsp;&nbsp;&nbsp;&nbsp;數組的定義和List一樣，都使用\<list\>元素。  
+>&nbsp;&nbsp;&nbsp;&nbsp;配置java.util.Set需要使用\<set\>標籤，定義的方法與List一樣。  
+>```
+>	<bean id="shop" class="com.atguigu.spring.bean.Shop" >
+>		<property name= "categoryList">
+>			<!-- 以字面量為值的List集合 -->
+>			<list>
+>				<value> 歷史</value >
+>				<value> 軍事</value >
+>			</list>
+>		</property>
+>		<property name= "bookList">
+>			<!-- 以bean的引用為值的List集合 -->
+>			<list>
+>				<ref bean= "book01"/>
+>				<ref bean= "book02"/>
+>			</list>
+>		</property>
+>	</bean >
+>```
+>#### 2.4.2 Map
+>&nbsp;&nbsp;&nbsp;&nbsp;Java.util.Map通過\<map\>標籤定義，\<map\>標籤裡可以使用多個\<entry\>作為子標籤。每個條目包含一個鍵和一個值。
+必須在\<key\>標籤裡定義鍵。  
+>&nbsp;&nbsp;&nbsp;&nbsp;因為鍵和值的類型沒有限制，所以可以自由地為它們指定\<value\>、\<ref\>、\<bean\>或\<null/\>元素。  
+>&nbsp;&nbsp;&nbsp;&nbsp;可以將Map的鍵和值作為\<entry\>的屬性定義：簡單常量使用key和value來定義；bean引用通過key-ref和value-ref屬性定義。  
+>```
+><bean id="cup" class="com.atguigu.spring.bean.Cup">
+>	<property name="bookMap">
+>		<map>
+>			<entry>
+>				<key>
+>					<value>bookKey01</value>
+>				</key>
+>				<ref bean="book01"/>
+>			</entry>
+>			<entry>
+>				<key>
+>					<value>bookKey02</value>
+>				</key>
+>				<ref bean="book02"/>
+>			</entry>
+>		</map>
+>	</property>
+></bean>
+>```
+>#### 2.4.3 集合類型的bean
+>&nbsp;&nbsp;&nbsp;&nbsp;如果只能將集合對象配置在某個bean內部，則這個集合的配置將不能重用。我們需要將集合bean的配置拿到外面，供其他bean引用。  
+>&nbsp;&nbsp;&nbsp;&nbsp;配置集合類型的bean需要引入util名稱空間  
+>```
+><util:list id="bookList">
+>	<ref bean="book01"/>
+>	<ref bean="book02"/>
+>	<ref bean="book03"/>
+>	<ref bean="book04"/>
+>	<ref bean="book05"/>
+></util:list>
+>
+><util:list id="categoryList">
+>	 <value>編程</value>
+>	 <value>極客</value>
+>	 <value>相聲</value>
+>	 <value>評書</value>
+></util:list>
+>```
+	
+### 2.5  FactoryBean	   
+> #### 2.5.1 FactoryBean
+>&nbsp;&nbsp;&nbsp;&nbsp;Spring中有兩種類型的bean，一種是普通bean，另一種是工廠bean，即FactoryBean。  
+>&nbsp;&nbsp;&nbsp;&nbsp;工廠bean跟普通bean不同，其返回的對像不是指定類的一個實例，其返回的是該工廠bean的getObject方法所返回的對象。  
+>&nbsp;&nbsp;&nbsp;&nbsp;工廠bean必須實現org.springframework.beans.factory.FactoryBean接口。  
+>![This is an image](./img/FactoryBean.png)
+>```
+><bean id="product" class="com.atguigu.spring.bean.ProductFactory">
+>	<property name="productName" value="Mp3" />
+></bean>
+>```
+
+### 2.6  bean的作用域
+&nbsp;&nbsp;&nbsp;&nbsp;在Spring中，可以在<bean>元素的scope屬性裡設置bean的作用域，以決定這個bean是單實例的還是多實例的。  
+&nbsp;&nbsp;&nbsp;&nbsp;默認情況下，Spring只為每個在IOC容器裡聲明的bean創建唯一一個實例，整個IOC容器範圍內都能共享該實例：所有後續的getBean()調用和bean引用都將返回這個唯一的bean實例。該作用域被稱為singleton，它是所有bean的默認作用域。  
+![This is an image](./img/bean的作用域.png)  
+而當bean的作用域為prototype時，IOC容器在獲取bean的實例時創建bean的實例對象。
+	
