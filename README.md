@@ -100,14 +100,34 @@
 >#### 2.3.1 依賴注入的方式
 >1. 通過bean的setXxx()方法賦值  
 >Hello World中使用的就是這種方式  
->![This is an image](./img/setXxx()方法賦值.png)
+>![This is an image](./img/setXxx方法賦值.png)
 >2. 通過bean的構造器賦值  
->		2.1 Spring自動匹配合適的構造器
+>		2.1 Spring自動匹配合適的構造器  
 >```
 >	<bean id="book" class="com.atguigu.spring.bean.Book" >
 >		<constructor-arg value= "10010"/>
 >		<constructor-arg value= "Book01"/>
 >		<constructor-arg value= "Author01"/>
 >		<constructor-arg value= "20.2"/>
+>	</bean >
+>```
+>&nbsp;&nbsp;&nbsp;&nbsp;
+>		2.2 通過索引值指定參數位置  
+>```
+>	<bean id="book" class="com.atguigu.spring.bean.Book" >
+>		<constructor-arg value= "10010" index ="0"/>
+>		<constructor-arg value= "Book01" index ="1"/>
+>		<constructor-arg value= "Author01" index ="2"/>
+>		<constructor-arg value= "20.2" index ="3"/>
+>	</bean >
+>```
+>&nbsp;&nbsp;&nbsp;&nbsp;
+>		2.3 通過類型區分重載的構造器  
+>```
+>	<bean id="book" class="com.atguigu.spring.bean.Book" >
+>		<constructor-arg value= "10010" index ="0" type="java.lang.Integer" />
+>		<constructor-arg value= "Book01" index ="1" type="java.lang.String" />
+>		<constructor-arg value= "Author01" index ="2" type="java.lang.String" />
+>		<constructor-arg value= "20.2" index ="3" type="java.lang.Double" />
 >	</bean >
 >```
