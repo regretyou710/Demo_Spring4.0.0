@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<!-- 
+		<context:component-scan>:掃描組件，對設置的包下面的類進行掃苗，會將加上註解的類作為spring的組件進行加載
+		組件：指spring中管理的bean
+		作為spring的組件進行加載：會自動在spring的配置文件中生成相對應的bean，這些bean的id會以類的首字母小寫為值
+	 -->
+	<context:component-scan
+		base-package="tw.com.spring.ioc.userModel"></context:component-scan>
+
+	<bean id="userController"
+		class="tw.com.spring.ioc.userModel.controller.UserController"></bean>
+	<bean id="userServiceImpl"
+		class="tw.com.spring.ioc.userModel.service.impl.UserServiceImpl"></bean>
+	<bean id="userDAOImpl"
+		class="tw.com.spring.ioc.userModel.dao.impl.UserDAOImpl"></bean>	
+</beans>
