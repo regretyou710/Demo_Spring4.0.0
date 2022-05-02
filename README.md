@@ -100,7 +100,7 @@
 >#### 2.3.1 依賴注入的方式
 >1. 通過bean的setXxx()方法賦值  
 >Hello World中使用的就是這種方式  
->![This is an image](./img/通過bean的setXxx方法賦值.png)
+>![This is an image](./img/通過bean的set方法賦值.png)
 >2. 通過bean的構造器賦值  
 >		2.1 Spring自動匹配合適的構造器  
 >```
