@@ -272,3 +272,127 @@
 ![This is an image](./img/bean的作用域.png)  
 而當bean的作用域為prototype時，IOC容器在獲取bean的實例時創建bean的實例對象。
 	
+### 2.7  bean的生命週期
+  1. Spring IOC容器可以管理bean的生命週期，Spring允許在bean生命週期內特定的時間點執行指定的任務。
+  2. Spring IOC容器對bean的生命週期進行管理的過程：  
+	① 通過構造器或工廠方法創建bean實例  
+	② 為bean的屬性設置值和對其他bean的引用  
+	③ 調用bean的初始化方法  
+	④ bean可以使用了  
+	⑤ 當容器關閉時，調用bean的銷毀方法  
+  3. 在配置bean時，通過init-method和destroy-method 屬性為bean指定初始化和銷毀方法
+  4. bean的後置處理器  
+	① bean後置處理器允許在調用初始化方法前後對bean進行額外的處理  
+	② bean後置處理器對IOC容器裡的所有bean實例逐一處理，而非單一實例。  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其典型應用是：檢查bean屬性的正確性或根據特定的標準更改bean的屬性。  
+	③ bean後置處理器需要實現接口：  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;org.springframework.beans.factory.config.BeanPostProcessor。  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在初始化方法被調用前後，Spring將把每個bean實例分別傳遞給上述接口的以下兩個方法：  
+		- postProcessBeforeInitialization(Object, String)  
+		- postProcessAfterInitialization(Object, String)
+  5. 添加bean後置處理器後bean的生命週期  
+	① 通過構造器或工廠方法創建bean實例  
+	② 為bean的屬性設置值和對其他bean的引用  
+	③ 將bean實例傳遞給bean後置處理器的postProcessBeforeInitialization()方法  
+	④ 調用bean的初始化方法  
+	⑤ 將bean實例傳遞給bean後置處理器的postProcessAfterInitialization()方法  
+	⑥ bean可以使用了  
+	⑦ 當容器關閉時調用bean的銷毀方法  
+
+### 2.8 引用外部屬性文件
+&nbsp;&nbsp;&nbsp;&nbsp;當bean的配置信息逐漸增多時，查找和修改一些bean的配置信息就變得愈加困難。這時可以將一部分信息提取到bean配置文件的外部，以properties格式的屬性文件保存起來，同時在bean的配置文件中引用properties屬性文件中的內容，從而實現一部分屬性值在發生變化時僅修改properties屬性文件即可。這種技術多用於連接數據庫的基本信息的配置。
+>#### 2.8.1 直接配置
+>```
+><!-- 直接配置 -->
+><bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+>	<property name="user" value="root"/>
+>	<property name="password" value="root"/>
+>	<property name="jdbcUrl" value="jdbc:mysql:///test"/>
+>	<property name="driverClass" value="com.mysql.jdbc.Driver"/>
+></bean>
+>```
+>#### 2.8.2 使用外部的屬性文件
+>	1. 創建properties屬性文件
+>```
+>prop.userName=root
+>prop.password=root
+>prop.url=jdbc:mysql:///test
+>prop.driverClass=com.mysql.jdbc.Driver
+>```
+>	2. 引入context名稱空間  
+>![This is an image](./img/引入context名稱空間.png)  
+>	3. 指定properties屬性文件的位置
+>```
+><!-- 指定properties屬性文件的位置 -->
+><!-- classpath:xxx 表示屬性文件位於類路徑下 -->
+><context:property-placeholder location="classpath:jdbc.properties"/>
+>```
+>	4. 從properties屬性文件中引入屬性值
+>```
+><!-- 從properties屬性文件中引入屬性值 -->
+><bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+>	<property name="user" value="${prop.userName}"/>
+>	<property name="password" value="${prop.password}"/>
+>	<property name="jdbcUrl" value="${prop.url}"/>
+>	<property name="driverClass" value="${prop.driverClass}"/>
+></bean>
+>```
+	
+### 2.9自動裝配
+>#### 2.9.1 自動裝配的概念
+>	1. 手動裝配：以value或ref的方式明確指定屬性值都是手動裝配。
+>	2. 自動裝配：根據指定的裝配規則，不需要明確指定，Spring自動將匹配的屬性值注入bean中。
+>#### 2.9.2 裝配模式
+>	1. 根據類型自動裝配：將類型匹配的bean作為屬性注入到另一個bean中。若IOC容器中有多個與目標bean類型一致的bean，Spring將無法判定哪個bean最合適該屬性，所以不能執行自動裝配
+>	2. 根據名稱自動裝配：必須將目標bean的名稱和屬性名設置的完全相同
+>	3. 通過構造器自動裝配：當bean中存在多個構造器時，此種自動裝配方式將會很複雜。不推薦使用。
+>#### 2.9.3 選用建議	
+>&nbsp;&nbsp;&nbsp;&nbsp;相對於使用註解的方式實現的自動裝配，在XML文檔中進行的自動裝配略顯笨拙，在項目中更多的使用註解的方式實現。
+
+###2.10 通過註解配置bean 
+>#### 2.10.1 概述
+>&nbsp;&nbsp;&nbsp;&nbsp;相對於XML方式而言，通過註解的方式配置bean更加簡潔和優雅，而且和MVC組件化開發的理念十分契合，是開發中常用的使用方式。
+>#### 2.10.2 使用註解標識組件
+>	1. 普通組件：@Component  
+	`標識一個受Spring IOC容器管理的組件`
+>	2. 持久化層組件：@Repository  
+	`標識一個受Spring IOC容器管理的持久化層組件`
+>	3. 業務邏輯層組件：@Service  
+	`標識一個受Spring IOC容器管理的業務邏輯層組件`
+>	4. 表述層控制器組件：@Controller  
+	`標識一個受Spring IOC容器管理的表述層控制器組件`
+>	5. 組件命名規則  
+	① 默認情況：使用組件的簡單類名首字母小寫後得到的字符串作為bean的id  
+	② 使用組件註解的value屬性指定bean的id  
+	注意：事實上Spring並沒有能力識別一個組件到底是不是它所標記的類型，即使將@Respository註解用在一個表述層控制器組件上面也不會產生任何錯誤，所以@Respository、@Service、@Controller這幾個註解僅僅是為了讓開發人員自己明確當前的組件扮演的角色。
+>#### 2.10.3  掃描組件
+>&nbsp;&nbsp;&nbsp;&nbsp;組件被上述註解標識後還需要通過Spring進行掃描才能夠偵測到。
+>	1. 指定被掃描的package
+>```
+><context:component-scan base-package="com.atguigu.component"/>
+>```
+>	2. 詳細說明  
+	① base-package屬性指定一個需要掃描的基類包，Spring容器將會掃描這個基類包及其子包中的所有類。  
+	② 當需要掃描多個包時可以使用逗號分隔。  
+	③ 如果僅希望掃描特定的類而非基包下的所有類，可使用resource-pattern屬性過濾特定的類，示例：  
+>```
+><context:component-scan 
+>	base-package="com.atguigu.component" 
+>	resource-pattern="autowire/*.class"/>
+>```  
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;④ 包含與排除  
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;●&nbsp;&nbsp;&lt;context:include-filter&gt;子節點表示要包含的目標類  
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注意：通常需要與use-default-filters屬性配合使用才能夠達到"僅包含某些組>>件"這樣的效果。  
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;即：通過將use-default-filters屬性設置為false，禁用默認過濾器，然後掃描的就只是include-filter中的規則指定的組件了。  
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;●&nbsp;&nbsp;&lt;context:exclude-filter&gt;子節點表示要排除在外的目標類  
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;●&nbsp;&nbsp;component-scan下可以擁有若干個include-filter和exclude-filter子節點  
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;●&nbsp;&nbsp;過濾表達式  
+>類別		|示例						|說明
+>------------|:-------------------------:|--------------------------------------------------------------------------------------------------------------
+>annotation	|com.atguigu.XxxAnnotation	|過濾所有標注了XxxAnnotation的類。這個規則根據目標群組件是否標注了指定類型的注解進行過濾。
+>assignable	|com.atguigu.BaseXxx		|過濾所有BaseXxx類的子類。這個規則根據目標群組件是否是指定類型的子類的方式進行過濾。
+>aspectj		|com.atguigu.*Service+		|所有類名是以Service結束的，或這樣的類的子類。這個規則根據AspectJ運算式進行過濾。
+>regex		|com\\.atguigu\\.anno\\.*		|所有com.atguigu.anno包下的類。這個規則根據規則運算式匹配到的類名進行過濾。
+>custom		|com.atguigu.XxxTypeFilter	|使用XxxTypeFilter類通過編碼的方式自訂過濾規則。該類必須實現org.springframework.core.type.filter.TypeFilter介面
+>	3. JAR包  
+>&nbsp;&nbsp;必須在原有JAR包組合的基礎上再導入一個：spring-aop-4.0.0.RELEASE.jar
