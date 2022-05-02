@@ -78,3 +78,36 @@
 >2. Spring提供了IOC容器的兩種實現方式  
 >		2.1 BeanFactory：IOC容器的基本實現，是Spring內部的基礎設施，是面向Spring本身的，不是提供給開發人員使用的。  
 >		2.2 ApplicationContext：BeanFactory的子接口，提供了更多高級特性。面向Spring的使用者，幾乎所有場合都使用ApplicationContext而不是底層的BeanFactory。
+>#### 2.1.4 ApplicationContext的主要實現類
+>1. ClassPathXmlApplicationContext：對應類路徑下的XML格式的配置文件
+>2. FileSystemXmlApplicationContext：對應文件系統中的XML格式的配置文件
+>3. 在初始化時就創建單例的bean，也可以通過配置的方式指定創建的Bean是多實例的。
+>#### 2.1.5 ConfigurableApplicationContext
+>1. 是ApplicationContext的子接口，包含一些擴展方法
+>2. refresh()和close()讓ApplicationContext具有啟動、關閉和刷新上下文的能力。
+>#### 2.1.6 WebApplicationContext
+>1. 專門為WEB應用而準備的，它允許從相對於WEB根目錄的路徑中完成初始化工作
+>#### 2.1.7 容器的結構圖  
+>![This is an image](./img/容器的結構圖.png)
+
+### 2.2 通過類型獲取bean
+1. 從IOC容器中獲取bean時，除了通過id值獲取，還可以通過bean的類型獲取。但如果同一個類型的bean在XML文件中配置了多個，則獲取時會拋出異常，所以同一個類型的bean在容器中必須是唯一的。  
+`HelloWorld helloWorld = cxt.getBean(HelloWorld. class);`
+2. 或者可以使用另外一個重載的方法，同時指定bean的id值和類型  
+`HelloWorld helloWorld = cxt.getBean(“helloWorld”,HelloWorld. class);`
+
+### 2.3 給bean的屬性賦值
+>#### 2.3.1 依賴注入的方式
+>1. 通過bean的setXxx()方法賦值  
+>Hello World中使用的就是這種方式  
+>![This is an image](./img/setXxx()方法賦值.png)
+>2. 通過bean的構造器賦值  
+>		2.1 Spring自動匹配合適的構造器
+>```
+>	<bean id="book" class="com.atguigu.spring.bean.Book" >
+>		<constructor-arg value= "10010"/>
+>		<constructor-arg value= "Book01"/>
+>		<constructor-arg value= "Author01"/>
+>		<constructor-arg value= "20.2"/>
+>	</bean >
+>```
