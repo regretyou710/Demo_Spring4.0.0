@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	
+	 <!-- 
+		<context:component-scan>:掃描組件，對設置的包下面的類進行掃苗，會將加上註解的類作為spring的組件進行加載
+		組件：指spring中管理的bean
+		作為spring的組件進行加載：會自動在spring的配置文件中生成相對應的bean，這些bean的id會以類的首字母小寫為值
+		<context:include-filter>:在設定的包結構下，再次通過註解或類型具體包含到某個或某幾個類
+		注意：在使用包含時，一定要設置use-default-filters="false"，將默認的過濾（即掃描包下所有的類）關閉
+		<context:exclude-filter>:在設定的包結構下，再次通過註解或類型排除某個或某幾個類
+		注意：在使用排除時，一定要設置use-default-filters="true"，將默認的過濾（即掃描包下所有的類）打開
+		切記：一個<context:component-scan>中可以出現多個include，也可以同時出現多個exclude，但是兩個不能同時出現
+	 -->	 
+	<context:component-scan
+	base-package="tw.com.spring.ioc.userModel" use-default-filters="false">
+	<!-- 根據註解過濾 -->
+	<!-- 
+	<context:include-filter type="annotation"
+		expression="org.springframework.stereotype.Controller" />
+ 	-->
+
+	<!-- 根據類型過濾 -->
+	<context:include-filter type="assignable"
+		expression="tw.com.spring.ioc.userModel.service.impl.UserServiceImpl" />
+	</context:component-scan>
+
+	<!-- 
+	<bean id="userController"
+		class="tw.com.spring.ioc.userModel.controller.UserController"></bean>
+	<bean id="userServiceImpl"
+		class="tw.com.spring.ioc.userModel.service.impl.UserServiceImpl"></bean>
+	<bean id="userDAOImpl"
+		class="tw.com.spring.ioc.userModel.dao.impl.UserDAOImpl"></bean>
+	-->	
+</beans>

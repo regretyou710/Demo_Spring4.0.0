@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aop-reference-model>
-<aop-project name="Demo06_注入方式"/>
 <aop-project name="Demo19_基於xml的自動裝配和基於註解的組件掃描"/>
+<aop-project name="Demo06_注入方式"/>
 <aop-project name="Demo17_自動裝配和兼容性"/>
 <aop-project name="Demo16_引用外部資源文件"/>
 <aop-project name="Demo04_Spring簡單案例2"/>
