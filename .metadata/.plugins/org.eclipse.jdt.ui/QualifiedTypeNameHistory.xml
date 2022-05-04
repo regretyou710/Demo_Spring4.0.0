@@ -21,13 +21,14 @@
 <fullyQualifiedTypeName name="tw.com.spring.ioc.auto.byType.IDept"/>
 <fullyQualifiedTypeName name="tw.com.spring.ioc.auto.byType.SuperCar"/>
 <fullyQualifiedTypeName name="org.springframework.stereotype.Controller"/>
-<fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
-<fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
 <fullyQualifiedTypeName name="org.springframework.context.ApplicationContext"/>
 <fullyQualifiedTypeName name="org.springframework.context.support.ClassPathXmlApplicationContext"/>
 <fullyQualifiedTypeName name="tw.com.spring.ioc.userModel.controller.UserController"/>
-<fullyQualifiedTypeName name="tw.com.spring.ioc.userModel.service.impl.UserServiceImpl"/>
+<fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
+<fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
 <fullyQualifiedTypeName name="tw.com.spring.ioc.userModel.service.IUserService"/>
-<fullyQualifiedTypeName name="tw.com.spring.ioc.userModel.dao.impl.UserDAOImpl"/>
+<fullyQualifiedTypeName name="tw.com.spring.ioc.userModel.service.impl.UserServiceImpl"/>
 <fullyQualifiedTypeName name="tw.com.spring.ioc.userModel.dao.IUserDAO"/>
+<fullyQualifiedTypeName name="tw.com.spring.ioc.userModel.dao.impl.UserDAOImpl"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
 </qualifiedTypeNameHistroy>
