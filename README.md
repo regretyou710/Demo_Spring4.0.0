@@ -5,7 +5,7 @@
 
 因為軟件系統發展到今天已經很複雜了，特別是服務器端軟件，涉及到的知識，內容，問題太多。在某些方面使用別人成熟的框架，就相當於讓別人幫你完成一些基礎工作，你只需要集中精力完成系統的業務邏輯設計。而且框架一般是成熟，穩健的，他可以處理系統很多細節問題，比如，事務處理，安全性，數據流控制等問題。還有框架一般都經過很多人使用，所以結構很好，所以擴展性也很好，而且它是不斷升級的，你可以直接享受別人升級代碼帶來的好處
     
-# 第1章	Spring概述
+# 第1章 Spring概述
 
 ### 1.1 Spring概述
   1. Spring是一個開源框架    
@@ -396,3 +396,58 @@
 >custom		|com.atguigu.XxxTypeFilter	|使用XxxTypeFilter類通過編碼的方式自訂過濾規則。該類必須實現org.springframework.core.type.filter.TypeFilter介面
 >	3. JAR包  
 >&nbsp;&nbsp;必須在原有JAR包組合的基礎上再導入一個：spring-aop-4.0.0.RELEASE.jar
+>#### 2.10.4 組件裝配
+>	1. 需求  
+>	Controller元件中往往需要用到Service元件的實例，Service元件中往往需要用到Repository元件的實例。Spring可以通過注解的方式幫我們實現屬性的裝配。
+>	2. 實現依據  
+>	在指定要掃描的包時，&lt;context:component-scan&gt; 元素會自動註冊一個bean的後置處理器：AutowiredAnnotationBeanPostProcessor的實例。該後置處理器可以自動裝配標記了@Autowired、@Resource或@Inject注解的屬性。
+>	3. @Autowired注解  
+>	① 根據類型實現自動裝配。  
+	② 構造器、普通欄位(即使是非public)、一切具有參數的方法都可以應用@Autowired注解  
+	③ 預設情況下，所有使用@Autowired注解的屬性都需要被設置。當Spring找不到匹配的bean裝配屬性時，會拋出異常。  
+	④ 若某一屬性允許不被設置，可以設置@Autowired注解的required屬性為 false  
+	⑤ 預設情況下，當IOC容器裡存在多個類型相容的bean時，Spring會嘗試匹配bean的id值是否與變數名相同，如果相同則進行裝配。如果bean的id值不相同，通過類型的自動裝配將無法工作。此時可以在@Qualifier注解裡提供bean的名稱。Spring甚至允許在方法的形參上標注@Qualifiter注解以指定注入bean的名稱。  
+	⑥ @Autowired注解也可以應用在陣列類型的屬性上，此時Spring將會把所有匹配的bean進行自動裝配。  
+	⑦ @Autowired注解也可以應用在集合屬性上，此時Spring讀取該集合的類型資訊，然後自動裝配所有與之相容的bean。  
+	⑧ @Autowired注解用在java.util.Map上時，若該Map的鍵值為String，那麼 Spring將自動裝配與數值型別相容的bean作為值，並以bean的id值作為鍵。  
+>	4. @Resource  
+	@Resource注解要求提供一個bean名稱的屬性，若該屬性為空，則自動採用標注處的變數或方法名作為bean的名稱。
+>	5. @Inject  
+	@Inject和@Autowired注解一樣也是按類型注入匹配的bean，但沒有reqired屬性。
+
+# 第3章 AOP前奏 
+	
+### 3.1 提出問題
+>#### 3.1.1 情景：數學計算器 
+>	1. 要求  
+	① 執行加減乘除運算  
+	② 日誌：在程式執行期間追蹤正在發生的活動  
+	③ 驗證：希望計算器只能處理正數的運算  
+>![This is an image](./img/要求.png)
+>	2. 常規實現  
+>![This is an image](./img/常規實現.png)
+>	3. 問題  
+	① 代碼混亂：越來越多的非業務需求(日誌和驗證等)加入後，原有的業務方法急劇膨脹。每個方法在處理核心邏輯的同時還必須兼顧其他多個關注點。  
+	② 代碼分散: 以日誌需求為例，只是為了滿足這個單一需求，就不得不在多個模組（方法）裡多次重複相同的日誌代碼。如果日誌需求發生變化，必須修改所有模組。
+
+### 3.2 動態代理
+>#### 3.2.1 動態代理的原理  
+>&nbsp;&nbsp;&nbsp;&nbsp;代理設計模式的原理：使用一個代理將原本物件包裝起來，然後用該代理物件”取代”原始物件。任何對原始物件的調用都要通過代理。代理物件決定是否以及何時將方法調用轉到原始物件上。  
+>![This is an image](./img/動態代理的原理.png)
+>#### 3.2.2 動態代理的方式
+>	1. 基於介面實現動態代理： JDK動態代理
+>	2. 基於繼承實現動態代理： Cglib、Javassist動態代理 
+
+### 3.3 數學計算器的改進
+>#### 3.3.1 日誌處理器
+>![This is an image](./img/日誌處理器.png)
+>#### 3.3.2 驗證處理器
+>![This is an image](./img/驗證處理器.png)
+>#### 3.3.3 測試代碼
+>![This is an image](./img/測試代碼.png)
+>#### 3.3.4 保存生成的動態代理類
+>```
+>	在測試方法中加入如下代碼：
+>	Properties properties = System.getProperties();
+>	properties.put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
+>```

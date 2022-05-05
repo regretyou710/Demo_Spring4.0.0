@@ -5,6 +5,7 @@
 <aop-project name="Demo17_自動裝配和兼容性"/>
 <aop-project name="Demo16_引用外部資源文件"/>
 <aop-project name="Demo04_Spring簡單案例2"/>
+<aop-project name="Demo22_組件管理總結"/>
 <aop-project name="Demo09-01_集合屬性賦值"/>
 <aop-project name="Demo09-02_集合屬性賦值"/>
 <aop-project name="Demo15_bean的後置處理器"/>

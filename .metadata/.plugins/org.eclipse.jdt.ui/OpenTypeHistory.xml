@@ -3,4 +3,6 @@
 <typeInfo handle="=Demo05_Spring配置介紹/lib\/spring-beans-4.0.0.RELEASE.jar&lt;org.springframework.beans.factory(BeanFactory.class[BeanFactory" modifiers="1537" timestamp="1651311123763"/>
 <typeInfo handle="=Demo11_FactoryBean/lib\/spring-beans-4.0.0.RELEASE.jar&lt;org.springframework.beans.factory(FactoryBean.class[FactoryBean" modifiers="1537" timestamp="1651311123763"/>
 <typeInfo handle="=Demo15_bean的後置處理器/lib\/spring-context-4.0.0.RELEASE.jar&lt;org.springframework.context.support(PostProcessorRegistrationDelegate$BeanPostProcessorChecker.class[BeanPostProcessorChecker" modifiers="10" timestamp="1651407505800"/>
+<typeInfo handle="=Demo23_AOP前奏/C:\/Program Files\/Java\/jre1.8.0_251\/lib\/rt.jar=/javadoc_location=/https:\/\/docs.oracle.com\/javase\/8\/docs\/api\/=/&lt;java.awt.image(ImageObserver.class[ImageObserver" modifiers="1537" timestamp="1641076869761"/>
+<typeInfo handle="=Demo23_AOP前奏/C:\/Program Files\/Java\/jre1.8.0_251\/lib\/rt.jar=/javadoc_location=/https:\/\/docs.oracle.com\/javase\/8\/docs\/api\/=/&lt;javax.imageio.stream(ImageInputStream.class[ImageInputStream" modifiers="1537" timestamp="1641076869761"/>
 </typeInfoHistroy>
