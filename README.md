@@ -485,3 +485,31 @@
 >&nbsp;&nbsp;&nbsp;&nbsp;定位連接點的方式。每個類的方法中都包含多個連接點，所以連接點是類中客觀存在的事物。如果把連接點看作資料庫中的記錄，那麼切入點就是查詢準則——AOP可以通過切入點定位到特定的連接點。切點通過org.springframework.aop.Pointcut 介面進行描述，它使用類和方法作為連接點的查詢準則。
 >#### 4.2.8 圖解
 >![This is an image](./img/圖解.png)
+	
+### 4.3 AspectJ
+>#### 4.3.1 簡介
+>&nbsp;&nbsp;&nbsp;&nbsp;AspectJ：Java社區裡最完整最流行的AOP框架。
+>&nbsp;&nbsp;&nbsp;&nbsp;在Spring2.0以上版本中，可以使用基於AspectJ注解或基於XML配置的AOP。
+>#### 4.3.2 在Spring中啟用AspectJ注解支持
+>	1. 導入JAR包  
+>	`com.springsource.net.sf.cglib-2.2.0.jar`  
+>	`com.springsource.org.aopalliance-1.0.0.jar`  
+>	`com.springsource.org.aspectj.weaver-1.6.8.RELEASE.jar `  
+>	`spring-aop-4.0.0.RELEASE.jar`  
+>	`spring-aspects-4.0.0.RELEASE.jar`  
+>	2. 引入aop名稱空間  
+>![This is an image](./img/引入aop名稱空間.png)
+>	3. 配置  
+>	&lt;aop:aspectj-autoproxy&gt;  
+>	當Spring IOC容器偵測到bean設定檔中的&lt;aop:aspectj-autoproxy&gt;元素時，會自動為與AspectJ切面匹配的bean創建代理
+>#### 4.3.3 用AspectJ注解聲明切面
+>	1. 要在Spring中聲明AspectJ切面，只需要在IOC容器中將切面聲明為bean實例。
+>	2. 當在Spring IOC容器中初始化AspectJ切面之後，Spring IOC容器就會為那些與 AspectJ切面相匹配的bean創建代理。
+>	3. 在AspectJ注解中，切面只是一個帶有@Aspect注解的Java類，它往往要包含很多通知。
+>	4. 通知是標注有某種注解的簡單的Java方法。
+>	5. AspectJ支援5種類型的通知注解：  
+>	① @Before：前置通知，在方法執行之前執行  
+>	② @After：後置通知，在方法執行之後執行  
+>	③ @AfterRunning：返回通知，在方法返回結果之後執行  
+>	④ @AfterThrowing：異常通知，在方法拋出異常之後執行  
+>	⑥ @Around：環繞通知，圍繞著方法執行  
