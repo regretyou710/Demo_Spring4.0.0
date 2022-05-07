@@ -2,7 +2,7 @@ package tw.com.spring.aop;
 
 import org.springframework.stereotype.Component;
 
-@Component
+@Component// 目標對象也須加入註解做為spring的組件AOP才會有作用
 public class CalculatorImpl implements ICalculator {
 
 	@Override

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<context:component-scan
+		base-package="tw.com.spring.aopxml">
+	</context:component-scan>
+
+	<!-- 使用spring原生方式配置aop -->
+	<aop:config>
+		<!-- 切面標籤 -->
+		<!-- 切面標籤屬性id:非必填，引用切面時須有id -->
+		<!-- 切面標籤屬性ref:非必填，引用切面時須有id -->
+		<!-- 切面標籤沒有class屬性，無法透過類的全限定類名指定切面，只能用ref引用spring容器中的某一個bean做為切面(bean的首字母小寫id，(MyLogger類已經使用@Component)) -->
+		<!-- 對於類來說:全限定類名就是包名.類名,即tw.com.spring.aopxml.MyLogger;非限定類名就是類名,即MyLogger -->
+		<aop:aspect ref="myLogger">
+			<!-- method等於切面的方法名稱 -->
+			<aop:before method="before"
+				pointcut="execution(* tw.com.spring.aopxml.*.*(..))" />
+
+			<!-- 使用公共切入點寫法 -->
+			<aop:pointcut
+				expression="execution(* tw.com.spring.aopxml.*.*(..))" id="cut" />
+			<aop:after method="after" pointcut-ref="cut" />
+		</aop:aspect>
+	</aop:config>
+</beans>
+
+
