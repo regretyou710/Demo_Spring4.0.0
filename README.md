@@ -451,3 +451,37 @@
 >	Properties properties = System.getProperties();
 >	properties.put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
 >```
+	
+# 第4章  AOP概述 
+
+### 4.1 AOP概述
+  1. AOP(Aspect-Oriented Programming，面向切面程式設計)：是一種新的方法論，是對傳統OOP(Object-Oriented Programming，物件導向程式設計)的補充。  
+  `物件導向  縱向繼承機制`  
+  `面向切面  橫向抽取機制`
+  2. AOP程式設計操作的主要對像是切面(aspect)，而切面用於模組化橫切關注點（公共功能）。  
+  3. 在應用AOP程式設計時，仍然需要定義公共功能，但可以明確的定義這個功能應用在哪裡，以什麼方式應用，並且不必修改受影響的類。這樣一來橫切關注點就被模組化到特殊的類裡——這樣的類我們通常稱之為"切面"。
+  4. AOP的好處：   
+  ① 每個事物邏輯位於一個位置，代碼不分散，便於維護和升級  
+  ② 業務模組更簡潔，只包含核心業務代碼  
+  ③ AOP圖解  
+![This is an image](./img/AOP圖解.png)
+	
+### 4.2 AOP術語
+>#### 4.2.1 橫切關注點
+>&nbsp;&nbsp;&nbsp;&nbsp;從每個方法中抽取出來的同一類非核心業務。
+>#### 4.2.2 切面(Aspect)
+>&nbsp;&nbsp;&nbsp;&nbsp;封裝橫切關注點資訊的類，每個關注點體現為一個通知方法。
+>#### 4.2.3 通知(Advice)
+>&nbsp;&nbsp;&nbsp;&nbsp;切面必須要完成的各個具體工作
+>#### 4.2.4 目標(Target)
+>&nbsp;&nbsp;&nbsp;&nbsp;被通知的物件
+>#### 4.2.5 代理(Proxy)
+>&nbsp;&nbsp;&nbsp;&nbsp;向目標物件應用通知之後創建的代理物件
+>#### 4.2.6 連接點(Joinpoint)
+>&nbsp;&nbsp;&nbsp;&nbsp;橫切關注點在程式碼中的具體體現，對應程式執行的某個特定位置。例如：類某個方法調用前、調用後、方法捕獲到異常後等。  
+>&nbsp;&nbsp;&nbsp;&nbsp;在應用程式中可以使用橫縱兩個座標來定位一個具體的連接點：  
+>![This is an image](./img/連接點.png)
+>#### 4.2.7 切入點(pointcut)：
+>&nbsp;&nbsp;&nbsp;&nbsp;定位連接點的方式。每個類的方法中都包含多個連接點，所以連接點是類中客觀存在的事物。如果把連接點看作資料庫中的記錄，那麼切入點就是查詢準則——AOP可以通過切入點定位到特定的連接點。切點通過org.springframework.aop.Pointcut 介面進行描述，它使用類和方法作為連接點的查詢準則。
+>#### 4.2.8 圖解
+>![This is an image](./img/圖解.png)
