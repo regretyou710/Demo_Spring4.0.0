@@ -56,7 +56,7 @@ public class MyLoggerAspect {
 	 * 可透過切入點表達式(returning)設定接收方法返回值的變數名稱，如要在通知方法中使用，afterReturning的型參和變量名稱須相同
 	 */
 	@AfterReturning(value = "execution(* tw.com.spring.aop.*.*(..))", returning = "result")
-	public void afterReturning(JoinPoint joinPoint, Object result) {
+	public void afterReturningMethod(JoinPoint joinPoint, Object result) {
 		String methodName = joinPoint.getSignature().getName();
 		System.out.println("返回通知  方法名稱:" + methodName + ",方法結果:" + result);
 	}
