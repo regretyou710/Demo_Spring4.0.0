@@ -9,13 +9,13 @@ public class Teacher {
 
 	private String tname;
 
-	// ¯Z¯Å²M³æ
+	// ç­ç´šæ¸…å–®
 	private List<String> cls;
 
-	// ¾Ç¥Í²M³æ
+	// å­¸ç”Ÿæ¸…å–®
 	private List<Student> students;
 
-	// ¤W¯Å¥DºŞ²M³æ
+	// ä¸Šç´šä¸»ç®¡æ¸…å–®
 	private Map<String, String> bossMap;
 
 	public Integer getTid() {

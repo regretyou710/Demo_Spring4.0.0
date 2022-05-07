@@ -10,11 +10,11 @@ public class Test {
 		ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("life.xml");
 		Person p1 = ac.getBean("person", Person.class);
 
-		// step3¤Îstep5¤£·|¦Û°Ê³Q½Õ¥Î¡A¶·³z¹L§Oªº¹ï¶H½Õ¥Î
-		// ¦b°t¸mÀÉbean¼ĞÅÒ¤¤ªºinit-method¤Îdestroy-method©w¤èªk¦WºÙ
+		// step3åŠstep5ä¸æœƒè‡ªå‹•è¢«èª¿ç”¨ï¼Œé ˆé€éåˆ¥çš„å°è±¡èª¿ç”¨
+		// åœ¨é…ç½®æª”beanæ¨™ç±¤ä¸­çš„init-methodåŠdestroy-methodå®šæ–¹æ³•åç¨±
 		System.out.println(p1);
 
-		// ®e¾¹Ãö³¬®É½Õ¥Îdestroy
+		// å®¹å™¨é—œé–‰æ™‚èª¿ç”¨destroy
 		ac.close();
 	}
 

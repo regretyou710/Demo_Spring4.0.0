@@ -26,8 +26,8 @@ public class Test2 {
 		System.out.println(ud);
 		*/
 		
-		// ·íUserServiceImplÃş¤¤ªºiUserDAOÄİ©Ê¦b°t¸m¤å¥ó¤¤¦³¨â­Óbean¥i¥H¬°¥L½á­È®É·|³ø¿ù
-		// ¥i³z¹LQualifierµù¸Ñ«ü©wbean id¨Óª`¤J
+		// ç•¶UserServiceImplé¡ä¸­çš„iUserDAOå±¬æ€§åœ¨é…ç½®æ–‡ä»¶ä¸­æœ‰å…©å€‹beanå¯ä»¥ç‚ºä»–è³¦å€¼æ™‚æœƒå ±éŒ¯
+		// å¯é€éQualifierè¨»è§£æŒ‡å®šbean idä¾†æ³¨å…¥
 		uc.addUser();
 	}
 

@@ -15,10 +15,10 @@ public class Test {
 		// TODO Auto-generated method stub
 		ApplicationContext ac = new ClassPathXmlApplicationContext("user.xml");
 
-		// Spring©ÒºŞ²zªºbeanÀq»{¬°³æ¨Ò¡A·í®e¾¹ªì©l¤ÆÃşªººc³y¨ç¼Æ·|ª½±µ³Q½Õ¥Î³Ğ«Ø¹ï¶H
-		// ¨BÆJ1. ¦]¬°bean¤£¯à¥H¤¶­±©Î©â¶HÃş¶i¦æ¹ê¨Ò¤Æ©Ò¥H­nSpringªºµù¸Ñ­nµù¸Ñ¦b¤@¯ëÃş¤W
-		// ¨BÆJ2. ³z¹L¼ĞÅÒ±½´yµù¸ÑªºÃş
-		// ¶·¤Ş¤Jaop jar¥]
+		// Springæ‰€ç®¡ç†çš„beané»˜èªç‚ºå–®ä¾‹ï¼Œç•¶å®¹å™¨åˆå§‹åŒ–é¡çš„æ§‹é€ å‡½æ•¸æœƒç›´æ¥è¢«èª¿ç”¨å‰µå»ºå°è±¡
+		// æ­¥é©Ÿ1. å› ç‚ºbeanä¸èƒ½ä»¥ä»‹é¢æˆ–æŠ½è±¡é¡é€²è¡Œå¯¦ä¾‹åŒ–æ‰€ä»¥è¦Springçš„è¨»è§£è¦è¨»è§£åœ¨ä¸€èˆ¬é¡ä¸Š
+		// æ­¥é©Ÿ2. é€éæ¨™ç±¤æƒæè¨»è§£çš„é¡
+		// é ˆå¼•å…¥aop jaråŒ…
 		
 		UserController uc = ac.getBean("userController", UserController.class);
 		System.out.println(uc);

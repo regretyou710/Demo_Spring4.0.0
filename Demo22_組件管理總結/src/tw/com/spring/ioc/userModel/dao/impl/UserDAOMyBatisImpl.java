@@ -9,7 +9,7 @@ public class UserDAOMyBatisImpl implements IUserDAO{
 
 	@Override
 	public void addUser() {
-		System.out.println("UserDAOMyBatisImpl:·s¼W¦¨¥\");		
+		System.out.println("UserDAOMyBatisImpl:æ–°å¢æˆåŠŸ!");		
 	}
 
 }

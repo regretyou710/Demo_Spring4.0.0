@@ -10,7 +10,7 @@ public class Test {
 		ApplicationContext ac = new ClassPathXmlApplicationContext("autoByName.xml");
 		Emp e1 = ac.getBean("emp", Emp.class);
 
-		// refªºbean id»PempªºrefÃş«¬ªºÄİ©Ê¦WºÙ¶i¦æ¤ñ¸û¡A¦pªG¤@­P«h¦Û°Ê½á­È
+		// refçš„bean idèˆ‡empçš„refé¡å‹çš„å±¬æ€§åç¨±é€²è¡Œæ¯”è¼ƒï¼Œå¦‚æœä¸€è‡´å‰‡è‡ªå‹•è³¦å€¼
 		System.out.println(e1);
 	}
 

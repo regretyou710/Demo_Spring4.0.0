@@ -36,8 +36,11 @@
 <fullyQualifiedTypeName name="java.security.interfaces.RSAKey"/>
 <fullyQualifiedTypeName name="tw.com.spring.proxy.IMath"/>
 <fullyQualifiedTypeName name="tw.com.spring.proxy.MathImpl"/>
-<fullyQualifiedTypeName name="tw.com.spring.proxy.CalculatorImpl"/>
 <fullyQualifiedTypeName name="java.lang.reflect.InvocationHandler"/>
 <fullyQualifiedTypeName name="java.lang.reflect.Method"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.lang.reflect.Proxy"/>
+<fullyQualifiedTypeName name="tw.com.spring.proxy.ProxyUtil"/>
+<fullyQualifiedTypeName name="tw.com.spring.proxy.ICalculator"/>
+<fullyQualifiedTypeName name="tw.com.spring.proxy.CalculatorImpl"/>
 </qualifiedTypeNameHistroy>

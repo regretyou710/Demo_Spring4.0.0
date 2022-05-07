@@ -8,18 +8,18 @@ public class TestBySpring {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		// ªì©l¤Æ
-		// ¤Ï®g¾÷¨î³z¹LclassªºµL°Ñ«Øºc¦¡¥Í¦¨¹ê¨Ò¹ï¶H
+		// åˆå§‹åŒ–
+		// åå°„æ©Ÿåˆ¶é€éclassçš„ç„¡åƒå»ºæ§‹å¼ç”Ÿæˆå¯¦ä¾‹å°è±¡
 		ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
 
-		// 1.³z¹Lbean ID¨ú±oclass
+		// 1.é€ébean IDå–å¾—class
 		// Person person = (Person) ac.getBean("person");
 
-		// 2.³z¹Lclass¨ú±oclass(bean¥i¥H¤£¥Î°t¸midÄİ©Ê)
-		// ¨Ï¥Î¦¹¤èªkÀò¨ú¹ï¶H®É¡A­n¨Dspring©ÒºŞ²zªº¦¹Ãş«¬ªº¹ï¹³¥u¯à¦³¤@­Ó
+		// 2.é€éclasså–å¾—class(beanå¯ä»¥ä¸ç”¨é…ç½®idå±¬æ€§)
+		// ä½¿ç”¨æ­¤æ–¹æ³•ç²å–å°è±¡æ™‚ï¼Œè¦æ±‚springæ‰€ç®¡ç†çš„æ­¤é¡å‹çš„å°åƒåªèƒ½æœ‰ä¸€å€‹
 		// Person person = ac.getBean(Person.class);
 
-		// 3.³z¹Lbean ID¤Îclass¨ú±oclass
+		// 3.é€ébean IDåŠclasså–å¾—class
 		Person person = ac.getBean("person2", Person.class);
 
 		System.out.println(person);

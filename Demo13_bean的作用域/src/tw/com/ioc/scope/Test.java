@@ -7,13 +7,13 @@ public class Test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		// ³æ¨Ò¼Ò¦¡·|¦b°t¸m¤å¥ó(®e¾¹)ªì©l¤Æ®É´N³Q³Ğ«Ø(¤£¥Îµ¥¨ì½Õ¥ÎgetBean¤~³Ğ«Ø)
-		// ¦h¨Ò«h¬Oµ¥¨ì¨Ï¥Î®É(½Õ¥ÎgetBean)¤~³Ğ«Ø
+		// å–®ä¾‹æ¨¡å¼æœƒåœ¨é…ç½®æ–‡ä»¶(å®¹å™¨)åˆå§‹åŒ–æ™‚å°±è¢«å‰µå»º(ä¸ç”¨ç­‰åˆ°èª¿ç”¨getBeanæ‰å‰µå»º)
+		// å¤šä¾‹å‰‡æ˜¯ç­‰åˆ°ä½¿ç”¨æ™‚(èª¿ç”¨getBean)æ‰å‰µå»º
 		ApplicationContext ac = new ClassPathXmlApplicationContext("scope.xml");
 		Student s1 = ac.getBean("student", Student.class);
 		Student s2 = ac.getBean("student", Student.class);
 
-		// bean³]¸m³æ¨Ò«á¹ï¶H¥u·|³Ğ«Ø¤@¦¸¡A¥i³z¹LµL°Ñ«Øºc¨ç¼Æ¿é¥X¦¸¼ÆÅçÃÒ
+		// beanè¨­ç½®å–®ä¾‹å¾Œå°è±¡åªæœƒå‰µå»ºä¸€æ¬¡ï¼Œå¯é€éç„¡åƒå»ºæ§‹å‡½æ•¸è¼¸å‡ºæ¬¡æ•¸é©—è­‰
 		System.out.println(s1);
 		System.out.println(s2);
 	}

@@ -4,13 +4,13 @@ public class Test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		// 1.¶Ç²Î«Ø¥ßÃşªº¹ê¨Ò
+		// 1.å‚³çµ±å»ºç«‹é¡çš„å¯¦ä¾‹
 		Person person = new Person();
 		person.setID(1001);
-		person.setName("±i¤T");
+		person.setName("å¼µä¸‰");
 		System.out.println(person);
 		
-		// 2.³z¹Lspring°t¸mÀÉ
+		// 2.é€éspringé…ç½®æª”
 	}
 
 }

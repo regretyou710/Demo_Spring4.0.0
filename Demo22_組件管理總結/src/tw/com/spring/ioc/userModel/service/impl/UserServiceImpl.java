@@ -24,11 +24,11 @@ public class UserServiceImpl implements IUserService {
 */
 	
 	
-	// Autowired¤]¥i¥Hµù¸Ñ¦b¤èªk¤W¨Ã·f°tQualifier
+	// Autowiredä¹Ÿå¯ä»¥è¨»è§£åœ¨æ–¹æ³•ä¸Šä¸¦æ­é…Qualifier
 	private IUserDAO iUserDAO;
 	
 	@Autowired
-	@Qualifier(value = "userDAOMyBatisImpl")// ³o­Óµù¸Ñ¬O§@¥Î©ósetIUserDAO°Ñ¼Æ(±N«ü©wªºbean§@¬°¹ê°Ñª`¤J)¡A»P¤èªk¦WµLÃö
+	@Qualifier(value = "userDAOMyBatisImpl")// é€™å€‹è¨»è§£æ˜¯ä½œç”¨æ–¼setIUserDAOåƒæ•¸(å°‡æŒ‡å®šçš„beanä½œç‚ºå¯¦åƒæ³¨å…¥)ï¼Œèˆ‡æ–¹æ³•åç„¡é—œ
 	public void setIUserDAO(IUserDAO iUserDAO) {
 		this.iUserDAO = iUserDAO;
 	}

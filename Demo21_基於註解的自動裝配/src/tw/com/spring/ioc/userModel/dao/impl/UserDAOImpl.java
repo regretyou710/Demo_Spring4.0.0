@@ -12,6 +12,6 @@ public class UserDAOImpl implements IUserDAO {
 
 	@Override
 	public void addUser() {
-		System.out.println("·s¼W¦¨¥\!");
+		System.out.println("æ–°å¢æˆåŠŸ!");
 	}
 }

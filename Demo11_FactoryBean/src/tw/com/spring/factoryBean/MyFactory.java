@@ -8,7 +8,7 @@ public class MyFactory implements FactoryBean<Car> {
 	public Car getObject() throws Exception {
 		// TODO Auto-generated method stub
 		Car car = new Car();
-		car.setBrand("¶ø­}");
+		car.setBrand("å¥§è¿ª");
 		car.setPrice(20000.0);
 		return car;
 	}

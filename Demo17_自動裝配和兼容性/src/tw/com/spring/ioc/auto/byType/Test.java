@@ -10,10 +10,10 @@ public class Test {
 		ApplicationContext ac = new ClassPathXmlApplicationContext("autoByType.xml");
 		Emp e1 = ac.getBean("emp", Emp.class);
 		
-		// ¦b°t¸m¤å¥ó¤¤¦³¤@­Óref¹ï¶H¯à¬°empªºrefÃş«¬½á­È´N¯à°÷¦Û°Ê¸Ë°t
-		// ­İ®e©Ê:
-		//  1. ¥Î¤lÃş¥i¥H¹ï¤÷Ãş½á­È
-		//  2. ¥Î¹ê²{Ãş¥i¥H¹ï¤¶­±½á­È
+		// åœ¨é…ç½®æ–‡ä»¶ä¸­æœ‰ä¸€å€‹refå°è±¡èƒ½ç‚ºempçš„refé¡å‹è³¦å€¼å°±èƒ½å¤ è‡ªå‹•è£é…
+		// å…¼å®¹æ€§:
+		//  1. ç”¨å­é¡å¯ä»¥å°çˆ¶é¡è³¦å€¼
+		//  2. ç”¨å¯¦ç¾é¡å¯ä»¥å°ä»‹é¢è³¦å€¼
 		System.out.println(e1);
 	}
 

@@ -11,7 +11,7 @@ public class Test {
 		Student s1 = ac.getBean("s1", Student.class);
 		System.out.println(s1);
 
-		// �z�L�c�y��ƳЫع�ҹ�H
+		// 透過構造函數創建實例對象
 		Student s2 = ac.getBean("s2", Student.class);
 		System.out.println(s2);
 

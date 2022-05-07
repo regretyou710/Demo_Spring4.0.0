@@ -8,7 +8,7 @@ public class Student {
 
 	public Student() {
 		super();
-		System.out.println("¹ï¶H¹ê¨Ò¤Æ");
+		System.out.println("å‰µå»ºå¯¦ä¾‹");
 	}
 
 	public String getSid() {

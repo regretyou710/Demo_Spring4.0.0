@@ -10,7 +10,7 @@ public class Person {
 
 	public Person() {
 		super();
-		System.out.println("step1. ³Ğ«Ø¹ï¶H");
+		System.out.println("step1. å‰µå»ºå°è±¡");
 	}
 
 	public Integer getId() {
@@ -18,7 +18,7 @@ public class Person {
 	}
 
 	public void setId(Integer id) {
-		System.out.println("step2. ¨Ì¿àª`¤J");
+		System.out.println("step2. ä¾è³´æ³¨å…¥");
 		this.id = id;
 	}
 
@@ -40,15 +40,15 @@ public class Person {
 
 	@Override
 	public String toString() {
-		return "step4. ¨Ï¥Î¹ï¶H  Person [id=" + id + ", sex=" + sex + ", name=" + name + "]";
+		return "step4. ä½¿ç”¨å°è±¡  Person [id=" + id + ", sex=" + sex + ", name=" + name + "]";
 	}
 
 	public void init() {
-		System.out.println("step3. ªì©l¤Æ");
+		System.out.println("step3. åˆå§‹åŒ–");
 	}
 
 	public void destroy() {
-		System.out.println("step5. ¾P·´");
+		System.out.println("step5. éŠ·æ¯€");
 	}
 
 }

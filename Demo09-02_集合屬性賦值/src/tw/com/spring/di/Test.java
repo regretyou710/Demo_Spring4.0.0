@@ -11,7 +11,7 @@ public class Test {
 		Student s1 = ac.getBean("s1", Student.class);
 		System.out.println(s1);
 
-		// ³z¹Lºc³y¨ç¼Æ³Ğ«Ø¹ê¨Ò¹ï¶H
+		// é€éæ§‹é€ å‡½æ•¸å‰µå»ºå¯¦ä¾‹å°è±¡
 		Student s2 = ac.getBean("s2", Student.class);
 		System.out.println(s2);
 
@@ -21,29 +21,29 @@ public class Test {
 		Student s4 = ac.getBean("s4", Student.class);
 		System.out.println(s4);
 
-		// ¨Ï¥Îref
+		// ä½¿ç”¨ref
 		Student s5 = ac.getBean("s5", Student.class);
 		System.out.println(s5);
 
 		Student s6 = ac.getBean("s6", Student.class);
 		System.out.println(s6);
 
-		// refªº¶°ÁpÄİ©Êª`¤J
+		// refçš„é›†è¯å±¬æ€§æ³¨å…¥
 		Student s7 = ac.getBean("s7", Student.class);
 		System.out.println(s7);
 
-		// ¤º³¡bean
+		// å…§éƒ¨bean
 		Student s8 = ac.getBean("s8", Student.class);
 		System.out.println(s8);
 
-		// ¶°¦XÄİ©Êª`¤J
+		// é›†åˆå±¬æ€§æ³¨å…¥
 		Teacher t3 = ac.getBean("t3", Teacher.class);
 		System.out.println(t3);
 
 		Teacher t4 = ac.getBean("t4", Teacher.class);
 		System.out.println(t4);
 
-		// ¶°¦XÄİ©Êª`¤J(Map)
+		// é›†åˆå±¬æ€§æ³¨å…¥(Map)
 		Teacher t5 = ac.getBean("t5", Teacher.class);
 		System.out.println(t5);
 	}

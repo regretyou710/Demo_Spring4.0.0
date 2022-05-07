@@ -3,26 +3,26 @@ package tw.com.ioc.life;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
-// bean«á¸m³B²z¾¹
+// beanå¾Œç½®è™•ç†å™¨
 public class AfterHandler implements BeanPostProcessor {
 
-	// ªì©l¤Æ«e
+	// åˆå§‹åŒ–å‰
 	@Override
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-		System.out.println("step3. ªì©l¤Æ«e");
+		System.out.println("step3. åˆå§‹åŒ–å‰");
 
 		Person p = (Person) bean;
-		if (p.getSex().equals("¨k"))
-			p.setName("±iµL§Ò");
+		if (p.getSex().equals("ç”·"))
+			p.setName("å¼µç„¡å¿Œ");
 		else
-			p.setName("»¯±Ó");
+			p.setName("è¶™æ•");
 		return p;
 	}
 
-	// ªì©l¤Æ«á
+	// åˆå§‹åŒ–å¾Œ
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-		System.out.println("step3. ªì©l¤Æ«á");
+		System.out.println("step3. åˆå§‹åŒ–å¾Œ");
 		return bean;
 	}
 

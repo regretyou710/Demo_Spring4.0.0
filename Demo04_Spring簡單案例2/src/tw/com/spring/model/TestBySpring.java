@@ -8,10 +8,10 @@ public class TestBySpring {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		// ªì©l¤Æ
+		// åˆå§‹åŒ–
 		ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
 
-		// ³z¹Lbean ID¨ú±oclass
+		// é€ébean IDå–å¾—class
 		Person person = (Person) ac.getBean("person");
 		System.out.println(person);
 	}
