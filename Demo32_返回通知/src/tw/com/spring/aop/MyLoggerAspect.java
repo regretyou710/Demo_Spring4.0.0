@@ -3,6 +3,8 @@ package tw.com.spring.aop;
 import java.util.Arrays;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
@@ -37,5 +39,25 @@ public class MyLoggerAspect {
 		Object[] args = joinPoint.getArgs();// 獲取方法的參數
 		String methodName = joinPoint.getSignature().getName();// 獲取方法的名稱
 		System.out.println("前置通知  方法名稱:" + methodName + ", 方法參數:" + Arrays.toString(args));
+	}
+	
+	/**
+	 * @After:將方法標註為後置通知
+	 * 經由div(1,0)方法測試，後置通知作用於方法的finally的區塊而非try區塊，不管有無異常都會執行
+	 */
+	@After(value = "execution(* tw.com.spring.aop.*.*(..))")
+	public void afterMethod() {
+		System.out.println("後置通知" );
+	} 
+	
+	/**
+	 * @AfterReturning:將方法標註為返回通知
+	 * 返回通知作用於方法之後，如果出現例外返回通知就不會有作用
+	 * 可透過切入點表達式(returning)設定接收方法返回值的變數名稱，如要在通知方法中使用，afterReturning的型參和變量名稱須相同
+	 */
+	@AfterReturning(value = "execution(* tw.com.spring.aop.*.*(..))", returning = "result")
+	public void afterReturning(JoinPoint joinPoint, Object result) {
+		String methodName = joinPoint.getSignature().getName();
+		System.out.println("返回通知  方法名稱:" + methodName + ",方法結果:" + result);
 	}
 }

@@ -3,6 +3,7 @@ package tw.com.spring.aop;
 import java.util.Arrays;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
@@ -38,4 +39,13 @@ public class MyLoggerAspect {
 		String methodName = joinPoint.getSignature().getName();// 獲取方法的名稱
 		System.out.println("前置通知  方法名稱:" + methodName + ", 方法參數:" + Arrays.toString(args));
 	}
+	
+	/**
+	 * @After:將方法標註為後置通知
+	 * 經由div(1,0)方法測試，後置通知作用於方法的finally的區塊而非try區塊，不管有無異常都會執行
+	 */
+	@After(value = "execution(* tw.com.spring.aop.*.*(..))")
+	public void afterMethod() {
+		System.out.println("後置通知" );
+	} 
 }
