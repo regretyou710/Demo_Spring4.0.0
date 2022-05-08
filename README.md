@@ -589,15 +589,99 @@
 >![This is an image](./img/環繞通知.png)
 	
 ### 5.4 重用切入點定義
->	1. 在編寫AspectJ切面時，可以直接在通知注解中書寫切入點運算式。但同一個切點運算式可能會在多個通知中重複出現。
->	2. 在AspectJ切面中，可以通過@Pointcut注解將一個切入點聲明成簡單的方法。切入點的方法體通常是空的，因為將切入點定義與應用程式邏輯混在一起是不合理的。
->	3. 切入點方法的存取控制符同時也控制著這個切入點的可見性。如果切入點要在多個切面中共用，最好將它們集中在一個公共的類中。在這種情況下，它們必須被聲明為public。在引入這個切入點時，必須將類名也包括在內。如果類沒有與這個切面放在同一個包中，還必須包含包名。
->	4. 其他通知可以通過方法名稱引入該切入點  
->![This is an image](./img/重用切入點定義.png)
+  1. 在編寫AspectJ切面時，可以直接在通知注解中書寫切入點運算式。但同一個切點運算式可能會在多個通知中重複出現。
+  2. 在AspectJ切面中，可以通過@Pointcut注解將一個切入點聲明成簡單的方法。切入點的方法體通常是空的，因為將切入點定義與應用程式邏輯混在一起是不合理的。
+  3. 切入點方法的存取控制符同時也控制著這個切入點的可見性。如果切入點要在多個切面中共用，最好將它們集中在一個公共的類中。在這種情況下，它們必須被聲明為public。在引入這個切入點時，必須將類名也包括在內。如果類沒有與這個切面放在同一個包中，還必須包含包名。
+  4. 其他通知可以通過方法名稱引入該切入點  
+![This is an image](./img/重用切入點定義.png)
 
 ### 5.5 指定切面的優先順序
->	1. 在同一個連接點上應用不止一個切面時，除非明確指定，否則它們的優先順序是不確定的。
->	2. 切面的優先順序可以通過實現Ordered介面或利用@Order注解指定。
->	3. 實現Ordered介面，getOrder()方法的返回值越小，優先順序越高。
->	4. 若使用@Order注解，序號出現在注解中
+  1. 在同一個連接點上應用不止一個切面時，除非明確指定，否則它們的優先順序是不確定的。
+  2. 切面的優先順序可以通過實現Ordered介面或利用@Order注解指定。
+  3. 實現Ordered介面，getOrder()方法的返回值越小，優先順序越高。
+  4. 若使用@Order注解，序號出現在注解中
 
+# 第6章 以XML方式配置切面 
+### 6.1 概述  
+&nbsp;&nbsp;&nbsp;&nbsp;除了使用AspectJ注解聲明切面，Spring也支援在bean設定檔中聲明切面。這種聲明是通過aop名稱空間中的XML元素完成的。  
+&nbsp;&nbsp;&nbsp;&nbsp;正常情況下，基於注解的聲明要優先於基於XML的聲明。通過AspectJ注解，切面可以與AspectJ相容，而基於XML的配置則是Spring專有的。由於AspectJ得到越來越多的 AOP框架支援，所以以注解風格編寫的切面將會有更多重用的機會。
+
+### 6.2 配置細節
+&nbsp;&nbsp;&nbsp;&nbsp;在bean設定檔中，所有的Spring AOP配置都必須定義在<aop:config>元素內部。對於每個切面而言，都要創建一個&lt;aop:aspect&gt;元素來為具體的切面實現引用後端bean實例。
+切面bean必須有一個識別字，供&lt;aop:aspect&gt;元素引用。  
+![This is an image](./img/配置細節.png)
+	
+### 6.3 聲明切入點
+  1. 切入點使用<aop:pointcut>元素聲明。
+  2. 切入點必須定義在<aop:aspect>元素下，或者直接定義在\<aop:config\>元素下。  
+	① 定義在<aop:aspect>元素下：只對當前切面有效  
+	② 定義在<aop:config>元素下：對所有切面都有效  
+  3. 基於XML的AOP配置不允許在切入點運算式中用名稱引用其他切入點。  
+![This is an image](./img/聲明切入點.png)
+
+### 6.4 聲明通知
+  1. 在aop名稱空間中，每種通知類型都對應一個特定的XML元素。
+  2. 通知元素需要使用<pointcut-ref>來引用切入點，或用\<pointcut\>直接嵌入切入點運算式。
+  3. method屬性指定切面類中通知方法的名稱  
+![This is an image](./img/聲明通知.png)
+
+# 第7章 JdbcTemplate 
+### 7.1 概述
+&nbsp;&nbsp;&nbsp;&nbsp;為了使JDBC更加易於使用，Spring在JDBC API上定義了一個抽象層，以此建立一個JDBC存取框架。  
+&nbsp;&nbsp;&nbsp;&nbsp;作為Spring JDBC框架的核心，JDBC範本的設計目的是為不同類型的JDBC操作提供範本方法，通過這種方式，可以在盡可能保留靈活性的情況下，將資料庫存取的工作量降到最低。  
+&nbsp;&nbsp;&nbsp;&nbsp;可以將Spring的JdbcTemplate看作是一個小型的羽量級持久化層框架，和我們之前使用過的DBUtils風格非常接近。
+
+### 7.2 環境準備
+>#### 7.2.1 導入JAR包
+>	1. IOC容器所需要的JAR包  
+>`commons-logging-1.1.1.jar`  
+>`spring-beans-4.0.0.RELEASE.jar`  
+>`spring-context-4.0.0.RELEASE.jar`  
+>`spring-core-4.0.0.RELEASE.jar`  
+>`spring-expression-4.0.0.RELEASE.jar`  
+>	2. JdbcTemplate所需要的JAR包  
+>`spring-jdbc-4.0.0.RELEASE.jar`  
+>`spring-orm-4.0.0.RELEASE.jar`  
+>`spring-tx-4.0.0.RELEASE.jar`  
+>	3. 資料庫驅動和資料來源  
+>`druid-1.1.9.jar`  
+>`mysql-connector-java-5.1.7-bin.jar`  
+>#### 7.2.2 創建連接資料庫基本資訊屬性檔
+>```
+>user=root
+>password=root
+>jdbcUrl=jdbc:mysql:///query_data
+>driverClass=com.mysql.jdbc.Driver
+>initialPoolSize=30
+>minPoolSize=10
+>maxPoolSize=100
+>acquireIncrement=5
+>maxStatements=1000
+>maxStatementsPerConnection=10
+>```
+>#### 7.2.3 在Spring設定檔中配置相關的bean
+>	1. 資料來源對象
+>```
+><context:property-placeholder location="classpath:jdbc.properties"/>
+>
+><bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+>	<property name="user" value="${user}"/>
+>	<property name="password" value="${password}"/>
+>	<property name="jdbcUrl" value="${jdbcUrl}"/>
+>	<property name="driverClass" value="${driverClass}"/>
+>	<property name="initialPoolSize" value="${initialPoolSize}"/>
+>	<property name="minPoolSize" value="${minPoolSize}"/>
+>	<property name="maxPoolSize" value="${maxPoolSize}"/>
+>	<property name="acquireIncrement" value="${acquireIncrement}"/>
+>	<property name="maxStatements" value="${maxStatements}"/>
+><property name="maxStatementsPerConnection" 
+>value="${maxStatementsPerConnection}"/>
+></bean>
+>```
+>	2. JdbcTemplate對象
+>```
+><bean id="template" 
+>class="org.springframework.jdbc.core.JdbcTemplate">
+>	<property name="dataSource" ref="dataSource"/>
+></bean>
+>```
