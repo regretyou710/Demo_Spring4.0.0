@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aop-reference-model>
+<aop-project name="Demo32_返回通知"/>
+<aop-project name="Demo31_後置通知"/>
 <aop-project name="Demo06_注入方式"/>
 <aop-project name="Demo19_基於xml的自動裝配和基於註解的組件掃描"/>
-<aop-project name="Demo17_自動裝配和兼容性"/>
+<aop-project name="Demo33_異常通知"/>
 <aop-project name="Demo16_引用外部資源文件"/>
 <aop-project name="Demo04_Spring簡單案例2"/>
-<aop-project name="Demo22_組件管理總結"/>
+<aop-project name="Demo28_切面的寫法"/>
 <aop-project name="Demo09-01_集合屬性賦值"/>
-<aop-project name="Demo09-02_集合屬性賦值"/>
+<aop-project name="Demo29_前置通知"/>
 <aop-project name="Demo15_bean的後置處理器"/>
-<aop-project name="Demo11_FactoryBean"/>
-<aop-project name="Demo05_Spring配置介紹"/>
 <aop-project name="Demo13_bean的作用域"/>
 <aop-project name="Demo14_bean的生命週期"/>
 <aop-project name="Demo10_集合類型的bean"/>
 <aop-project name="Demo20_掃描組件之包含和排除"/>
-<aop-project name="Demo07_p命名空間"/>
 <aop-project name="Demo21_基於註解的自動裝配"/>
-<aop-project name="Demo03_Spring簡單案例1"/>
+<aop-project name="Demo07_p命名空間"/>
 <aop-project name="Demo08_字面量和ref"/>
+<aop-project name="Demo35_公共切入點和切面的優先級"/>
+<aop-project name="Demo17_自動裝配和兼容性"/>
+<aop-project name="Demo22_組件管理總結"/>
+<aop-project name="Demo09-02_集合屬性賦值"/>
+<aop-project name="Demo30_切入點表達式"/>
+<aop-project name="Demo11_FactoryBean"/>
+<aop-project name="Demo05_Spring配置介紹"/>
+<aop-project name="Demo34_環繞通知"/>
+<aop-project name="Demo03_Spring簡單案例1"/>
 </aop-reference-model>
