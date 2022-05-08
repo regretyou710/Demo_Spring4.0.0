@@ -4,7 +4,7 @@ public class Emp {
 
 	private Integer eid;
 
-	private String emane;
+	private String ename;
 
 	private Integer age;
 
@@ -18,12 +18,12 @@ public class Emp {
 		this.eid = eid;
 	}
 
-	public String getEmane() {
-		return emane;
+	public String getEname() {
+		return ename;
 	}
 
-	public void setEmane(String emane) {
-		this.emane = emane;
+	public void setEname(String ename) {
+		this.ename = ename;
 	}
 
 	public Integer getAge() {
@@ -44,7 +44,7 @@ public class Emp {
 
 	@Override
 	public String toString() {
-		return "Emp [eid=" + eid + ", emane=" + emane + ", age=" + age + ", sex=" + sex + "]";
+		return "Emp [eid=" + eid + ", ename=" + ename + ", age=" + age + ", sex=" + sex + "]";
 	}
 
 }

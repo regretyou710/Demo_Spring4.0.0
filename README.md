@@ -685,3 +685,35 @@
 >	<property name="dataSource" ref="dataSource"/>
 ></bean>
 >```
+	
+### 7.3 持久化操作
+  1. 增刪改  
+	JdbcTemplate.update(String, Object...)  
+  2. 批量增刪改  
+	JdbcTemplate.batchUpdate(String, List<Object[]>)  
+	Object[]封裝了SQL語句每一次執行時所需要的參數  
+	List集合封裝了SQL語句多次執行時的所有參數  
+  3. 查詢單行  
+	JdbcTemplate.queryForObject(String, RowMapper<Department>, Object...)  
+![This is an image](./img/查詢單行.png)
+  4. 查詢多行  
+	JdbcTemplate.query(String, RowMapper<Department>, Object...)  
+	RowMapper物件依然可以使用BeanPropertyRowMapper  
+  5. 查詢單一值  
+	JdbcTemplate.queryForObject(String, Class, Object...)  
+
+### 7.4 使用JdbcTemplate實現Dao
+  1. 通過IOC容器自動注入  
+	JdbcTemplate類是執行緒安全的，所以可以在IOC容器中聲明它的單個實例，並將這個實例注入到所有的Dao實例中。
+```
+@Repository
+public class EmployeeDao {
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
+	public Employee get(Integer id){
+		//…
+	}
+}
+```
