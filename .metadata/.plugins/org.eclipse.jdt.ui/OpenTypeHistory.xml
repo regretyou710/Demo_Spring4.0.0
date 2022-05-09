@@ -5,4 +5,5 @@
 <typeInfo handle="=Demo15_bean的後置處理器/lib\/spring-context-4.0.0.RELEASE.jar&lt;org.springframework.context.support(PostProcessorRegistrationDelegate$BeanPostProcessorChecker.class[BeanPostProcessorChecker" modifiers="10" timestamp="1651407505800"/>
 <typeInfo handle="=Demo23_AOP前奏/C:\/Program Files\/Java\/jre1.8.0_251\/lib\/rt.jar=/javadoc_location=/https:\/\/docs.oracle.com\/javase\/8\/docs\/api\/=/&lt;java.awt.image(ImageObserver.class[ImageObserver" modifiers="1537" timestamp="1641076869761"/>
 <typeInfo handle="=Demo23_AOP前奏/C:\/Program Files\/Java\/jre1.8.0_251\/lib\/rt.jar=/javadoc_location=/https:\/\/docs.oracle.com\/javase\/8\/docs\/api\/=/&lt;javax.imageio.stream(ImageInputStream.class[ImageInputStream" modifiers="1537" timestamp="1641076869761"/>
+<typeInfo handle="=Demo42_事務問題演示/src&lt;tw.com.book.dao{IBookDAO.java[IBookDAO" modifiers="513" timestamp="1652098477388"/>
 </typeInfoHistroy>
