@@ -717,3 +717,108 @@ public class EmployeeDao {
 	}
 }
 ```
+	
+# 第8章 聲明式事務管理 
+### 8.1 事務概述
+  1. 在JavaEE企業級開發的應用領域，為了保證資料的完整性和一致性，必須引入資料庫事務的概念，所以事務管理是企業級應用程式開發中必不可少的技術。
+  2. 事務就是一組由於邏輯上緊密關聯而合併成一個整體(工作單元)的多個資料庫操作，這些操作要麼都執行，要麼都不執行。 
+  3. 事務的四個關鍵屬性(ACID)  
+	① 原子性(atomicity)：“原子”的本意是“不可再分”，事務的原子性表現為一個事務中涉及到的多個操作在邏輯上缺一不可。事務的原子性要求事務中的所有操作要麼都執行，要麼都不執行。  
+	② 一致性(consistency)：“一致”指的是資料的一致，具體是指：所有資料都處於滿足業務規則的一致性狀態。一致性原則要求：一個事務中不管涉及到多少個操作，都必須保證事務執行之前資料是正確的，事務執行之後資料仍然是正確的。如果一個事務在執行的過程中，其中某一個或某幾個操作失敗了，則必須將其他所有操作撤銷，將資料恢復到事務執行之前的狀態，這就是回滾。  
+	③ 隔離性(isolation)：在應用程式實際運行過程中，事務往往是併發執行的，所以很有可能有許多事務同時處理相同的資料，因此每個事務都應該與其他事務隔離開來，防止資料損壞。隔離性原則要求多個事務在併發執行過程中不會互相干擾。  
+	④ 持久性(durability)：持久性原則要求事務執行完成後，對資料的修改永久的保存下來，不會因各種系統錯誤或其他意外情況而受到影響。通常情況下，事務對資料的修改應該被寫入到持久化記憶體中。  
+
+### 8.2 Spring事務管理
+>#### 8.2.1 程式設計式事務管理
+>	1. 使用原生的JDBC API進行事務管理  
+	① 獲取資料庫連接Connection物件  
+	② 取消事務的自動提交  
+	③ 執行操作  
+	④ 正常完成操作時手動提交事務  
+	⑤ 執行失敗時回滾事務  
+	⑥ 關閉相關資源  
+>	2.評價  
+>&nbsp;&nbsp;&nbsp;&nbsp;使用原生的JDBC API實現事務管理是所有事務管理方式的基石，同時也是最典型的程式設計式事務管理。程式設計式事務管理需要將事務管理代碼嵌入到業務方法中來控制事務的提交和回滾。在使用程式設計的方式管理事務時，必須在每個事務操作中包含額外的事務管理代碼。相對於核心業務而言，事務管理的代碼顯然屬於非核心業務，如果多個模組都使用同樣模式的代碼進行事務管理，顯然會造成較大程度的代碼冗餘。
+>#### 8.2.2 聲明式事務管理
+>&nbsp;&nbsp;&nbsp;&nbsp;大多數情況下聲明式事務比程式設計式事務管理更好：它將事務管理代碼從業務方法中分離出來，以聲明的方式來實現事務管理。  
+>&nbsp;&nbsp;&nbsp;&nbsp;事務管理代碼的固定模式作為一種橫切關注點，可以通過AOP方法模組化，進而借助Spring AOP框架實現聲明式事務管理。  
+>&nbsp;&nbsp;&nbsp;&nbsp;Spring在不同的事務管理API之上定義了一個抽象層，通過配置的方式使其生效，從而讓應用程式開發人員不必瞭解事務管理API的底層實現細節，就可以使用Spring的事務管理機制。  
+>&nbsp;&nbsp;&nbsp;&nbsp;Spring既支援程式設計式事務管理，也支援聲明式的事務管理。
+>#### 8.2.3 Spring提供的事務管理器
+>&nbsp;&nbsp;&nbsp;&nbsp;Spring從不同的事務管理API中抽象出了一整套事務管理機制，讓事務管理代碼從特定的事務技術中獨立出來。開發人員通過配置的方式進行事務管理，而不必瞭解其底層是如何實現的。  
+>&nbsp;&nbsp;&nbsp;&nbsp;Spring的核心事務管理抽象是它為事務管理封裝了一組獨立於技術的方法。無論使用Spring的哪種事務管理策略(程式設計式或聲明式)，事務管理器都是必須的。  
+>&nbsp;&nbsp;&nbsp;&nbsp;事務管理器可以以普通的bean的形式聲明在Spring IOC容器中。  
+>#### 8.2.4 事務管理器的主要實現
+>	1. DataSourceTransactionManager：在應用程式中只需要處理一個資料來源，而且通過JDBC存取。
+>	2. JtaTransactionManager：在JavaEE應用伺服器上用JTA(Java Transaction API)進行事務管理
+>	3. HibernateTransactionManager：用Hibernate框架存取資料庫  
+>![This is an image](./img/事務管理器的主要實現.png)
+
+### 8.3 測試資料準備
+>#### 8.3.1 需求
+>![This is an image](./img/需求.png)
+>#### 8.3.2 資料庫表
+>```
+>CREATE TABLE book (
+>  isbn VARCHAR (50) PRIMARY KEY,
+>  book_name VARCHAR (100),
+>  price INT
+>) ;
+>
+>CREATE TABLE book_stock (
+>  isbn VARCHAR (50) PRIMARY KEY,
+>  stock INT
+>  ) ;
+>
+>CREATE TABLE account (
+>  username VARCHAR (50) PRIMARY KEY,
+>  balance INT
+>) ;
+>
+>INSERT INTO account (`username`,`balance`) VALUES ('Tom',100000);
+>INSERT INTO account (`username`,`balance`) VALUES ('Jerry',150000);
+>
+>INSERT INTO book (`isbn`,`book_name`,`price`) VALUES ('ISBN-001','book01',100);
+>INSERT INTO book (`isbn`,`book_name`,`price`) VALUES ('ISBN-002','book02',200);
+>INSERT INTO book (`isbn`,`book_name`,`price`) VALUES ('ISBN-003','book03',300);
+>INSERT INTO book (`isbn`,`book_name`,`price`) VALUES ('ISBN-004','book04',400);
+>INSERT INTO book (`isbn`,`book_name`,`price`) VALUES ('ISBN-005','book05',500);
+>
+>INSERT INTO book_stock (`isbn`,`stock`) VALUES ('ISBN-001',1000);
+>INSERT INTO book_stock (`isbn`,`stock`) VALUES ('ISBN-002',2000);
+>INSERT INTO book_stock (`isbn`,`stock`) VALUES ('ISBN-003',3000);
+>INSERT INTO book_stock (`isbn`,`stock`) VALUES ('ISBN-004',4000);
+>INSERT INTO book_stock (`isbn`,`stock`) VALUES ('ISBN-005',5000);
+>```
+
+### 8.4 初步實現
+  1. 設定檔
+```
+<!-- 配置事務管理器 -->
+<bean id="transactionManager" 
+	class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<property name="dataSource" ref="dataSource"/>	  
+</bean>
+
+<!-- 啟用事務注解 -->
+<tx:annotation-driven transaction-manager="transactionManager"/>
+```
+  2. 在需要進行事務控制的方法上加注解 @Transactional
+	
+### 8.5 事務的傳播行為
+>#### 8.5.1 簡介
+>&nbsp;&nbsp;&nbsp;&nbsp;當事務方法被另一個事務方法調用時，必須指定事務應該如何傳播。例如：方法可能繼續在現有事務中運行，也可能開啟一個新事務，並在自己的事務中運行。
+事務的傳播行為可以由傳播屬性指定。Spring定義了7種類傳播行為。  
+>![This is an image](./img/簡介.png)  
+>事務傳播屬性可以在@Transactional注解的propagation屬性中定義。
+>#### 8.5.2 測試
+>![This is an image](./img/測試.png)  
+>	1. 說明  
+	① REQUIRED傳播行為  
+>&nbsp;&nbsp;&nbsp;&nbsp;當bookService的purchase()方法被另一個事務方法checkout()調用時，它預設會在現有的事務內運行。這個默認的傳播行為就是REQUIRED。因此在checkout()方法的開始和終止邊界內只有一個事務。這個事務只在checkout()方法結束的時候被提交，結果用戶一本書都買不了。  
+>![This is an image](./img/REQUIRED傳播行為.png)<br/>
+	② REQUIRES_NEW傳播行為  
+>&nbsp;&nbsp;&nbsp;&nbsp;表示該方法必須啟動一個新事務，並在自己的事務內運行。如果有事務在運行，就應該先掛起它。  
+>![This is an image](./img/REQUIRES_NEW傳播行為.png)  
+>#### 8.5.3 補充
+>![This is an image](./img/補充.png)

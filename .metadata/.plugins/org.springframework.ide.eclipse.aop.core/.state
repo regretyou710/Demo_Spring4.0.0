@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aop-reference-model>
 <aop-project name="Demo32_返回通知"/>
-<aop-project name="Demo31_後置通知"/>
 <aop-project name="Demo40_JdbcTemplate之queryForObject"/>
+<aop-project name="Demo31_後置通知"/>
 <aop-project name="Demo19_基於xml的自動裝配和基於註解的組件掃描"/>
 <aop-project name="Demo06_注入方式"/>
 <aop-project name="Demo33_異常通知"/>
