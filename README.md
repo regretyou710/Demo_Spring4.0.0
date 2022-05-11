@@ -822,3 +822,52 @@ public class EmployeeDao {
 >![This is an image](./img/REQUIRES_NEW傳播行為.png)  
 >#### 8.5.3 補充
 >![This is an image](./img/補充.png)
+	
+### 8.6 事務的隔離級別
+>#### 8.6.1 資料庫事務併發問題
+>&nbsp;&nbsp;&nbsp;&nbsp;假設現在有兩個事務：Transaction01和Transaction02併發執行。
+>	1. 髒讀  
+	① Transaction01將某條記錄的AGE值從20修改為30。  
+	② Transaction02讀取了Transaction01更新後的值：30。  
+	③ Transaction01回滾，AGE值恢復到了20。  
+	④ Transaction02讀取到的30就是一個無效的值。  
+>	2. 不可重複讀  
+	① Transaction01讀取了AGE值為20。  
+	② Transaction02將AGE值修改為30。  
+	③ Transaction01再次讀取AGE值為30，和第一次讀取不一致。  
+>	3. 幻讀  
+	① Transaction01讀取了STUDENT表中的一部分資料。  
+	② Transaction02向STUDENT表中插入了新的行。  
+	③  Transaction01讀取了STUDENT表時，多出了一些行。  
+>#### 8.6.2 隔離級別
+>&nbsp;&nbsp;&nbsp;&nbsp;資料庫系統必須具有隔離併發運行各個事務的能力，使它們不會相互影響，避免各種併發問題。一個事務與其他事務隔離的程度稱為隔離級別。SQL標準中規定了多種事務隔離級別，不同隔離級別對應不同的干擾程度，隔離級別越高，資料一致性就越好，但併發性越弱。
+>	1. 讀未提交：READ UNCOMMITTED  
+	&nbsp;&nbsp;&nbsp;&nbsp;允許Transaction01讀取Transaction02未提交的修改。
+>	2. 讀已提交：READ COMMITTED  
+	&nbsp;&nbsp;&nbsp;&nbsp;要求Transaction01只能讀取Transaction02已提交的修改。
+>	3. 可重複讀：REPEATABLE READ  
+	&nbsp;&nbsp;&nbsp;&nbsp;確保Transaction01可以多次從一個欄位中讀取到相同的值，即Transaction01執行期間禁止其它事務對這個欄位進行更新。
+>	4. 序列化：SERIALIZABLE  
+	&nbsp;&nbsp;&nbsp;&nbsp;確保Transaction01可以多次從一個表中讀取到相同的行，在Transaction01執行期間，禁止其它事務對這個表進行添加、更新、刪除操作。可以避免任何併發問題，但性能十分低下。
+>	5. 各個隔離級別解決併發問題的能力見下表
+>
+>&nbsp;|髒讀|不可重複讀|幻讀|
+>-|:-|:-|:-|
+>READ UNCOMMITTED|有|有|有|
+>READ COMMITTED|無|有|有|
+>REPEATABLE READ|無|無|有|
+>SERIALIZABLE|無|無|無|
+>	6. 各種資料庫產品對事務隔離級別的支援程度
+>
+>&nbsp;|Oracle|MySQL
+>-|:-|:-|
+>READ UNCOMMITTED|×|√
+>READ COMMITTED|√(默認)|√
+>REPEATABLE READ|×|√(默認)
+>SERIALIZABLE|√|√
+>#### 8.6.3 在Spring中指定事務隔離級別
+>	1. 注解  
+>&nbsp;&nbsp;&nbsp;&nbsp;用@Transactional注解聲明式地管理事務時可以在@Transactional的isolation屬性中設置隔離級別
+>	2. XML  
+>&nbsp;&nbsp;&nbsp;&nbsp;在Spring 2.x事務通知中，可以在<tx:method>元素中指定隔離級別  
+>![This is an image](./img/在Spring中指定事務隔離級別.png)

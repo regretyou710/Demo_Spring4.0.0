@@ -23,6 +23,7 @@
 		<property name="password" value="${jdbc.password}"></property>
 	</bean>
 
+	<!-- 透過數據源配置jdbcTemplate -->
 	<!-- spring將jdbc的功能封裝成一個對象，就叫做JdbcTemplate -->
 	<!-- JdbcTemplate相當一個入口，可以訪問jdbc -->
 	<bean id="jdbcTemplate"
