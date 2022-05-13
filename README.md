@@ -871,3 +871,56 @@ public class EmployeeDao {
 >	2. XML  
 >&nbsp;&nbsp;&nbsp;&nbsp;在Spring 2.x事務通知中，可以在<tx:method>元素中指定隔離級別  
 >![This is an image](./img/在Spring中指定事務隔離級別.png)
+
+### 8.7 觸發交易復原的異常
+>#### 8.7.1 預設情況
+>&nbsp;&nbsp;&nbsp;&nbsp;捕獲到RuntimeException或Error時回滾，而捕獲到編譯時異常不回滾。
+>#### 8.7.2 設置途經
+>	1. 注解@Transactional 注解  
+	① rollbackFor屬性：指定遇到時必須進行回滾的異常類型，可以為多個  
+	② noRollbackFor屬性：指定遇到時不回滾的異常類型，可以為多個  
+>![This is an image](./img/設置途經1.png)
+>	2. XML  
+>&nbsp;&nbsp;&nbsp;&nbsp;在Spring 2.x事務通知中，可以在<tx:method>元素中指定回滾規則。如果有不止一種異常則用逗號分隔。  
+>![This is an image](./img/設置途經2.png)
+	
+### 8.8 事務的超時和唯讀屬性
+>#### 8.8.1 簡介
+>&nbsp;&nbsp;&nbsp;&nbsp;由於事務可以在行和表上獲得鎖，因此長事務會佔用資源，並對整體性能產生影響。  
+>&nbsp;&nbsp;&nbsp;&nbsp;如果一個事務唯讀取資料但不做修改，資料庫引擎可以對這個事務進行優化。  
+>&nbsp;&nbsp;&nbsp;&nbsp;超時事務屬性：事務在強制回滾之前可以保持多久。這樣可以防止長期運行的事務佔用資源。  
+>&nbsp;&nbsp;&nbsp;&nbsp;唯讀事務屬性: 表示這個事務唯讀取資料但不更新資料, 這樣可以説明資料庫引擎優化事務。
+>#### 8.8.2 設置
+>	1. 注解  
+>&nbsp;&nbsp;&nbsp;&nbsp;@Transaction注解  
+>![This is an image](./img/設置1.png)
+>	2. XML  
+>&nbsp;&nbsp;&nbsp;&nbsp;在Spring 2.x事務通知中，超時和唯讀屬性可以在<tx:method>元素中進行指定  
+>![This is an image](./img/設置2.png)
+
+### 8.9 基於XML文檔的聲明式事務配置
+```
+	<!-- 配置事務切面 -->
+	<aop:config>
+		<aop:pointcut 
+			expression="execution(* com.atguigu.tx.component.service.BookShopServiceImpl.purchase(..))" 
+			id="txPointCut"/>
+		<!-- 將切入點運算式和事務屬性配置關聯到一起 -->
+		<aop:advisor advice-ref="myTx" pointcut-ref="txPointCut"/>
+	</aop:config>
+	
+	<!-- 配置基於XML的聲明式事務  -->
+	<tx:advice id="myTx" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 設置具體方法的事務屬性 -->
+			<tx:method name="find*" read-only="true"/>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="purchase" 
+				isolation="READ_COMMITTED" 
+	no-rollback-for="java.lang.ArithmeticException,java.lang.NullPointerException"
+				propagation="REQUIRES_NEW"
+				read-only="false"
+				timeout="10"/>
+		</tx:attributes>
+	</tx:advice>
+```

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="tw.com.ioc.scope.Student"/>
 <fullyQualifiedTypeName name="org.springframework.beans.factory.config.BeanPostProcessor"/>
 <fullyQualifiedTypeName name="tw.com.ioc.life.Person"/>
 <fullyQualifiedTypeName name="com.alibaba.druid.pool.DruidDataSource"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="org.springframework.transaction.annotation.Transactional"/>
+<fullyQualifiedTypeName name="org.springframework.transaction.annotation.Propagation"/>
 </qualifiedTypeNameHistroy>

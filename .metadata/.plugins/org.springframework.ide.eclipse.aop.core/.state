@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aop-reference-model>
 <aop-project name="Demo32_返回通知"/>
-<aop-project name="Demo31_後置通知"/>
 <aop-project name="Demo40_JdbcTemplate之queryForObject"/>
+<aop-project name="Demo31_後置通知"/>
 <aop-project name="Demo19_基於xml的自動裝配和基於註解的組件掃描"/>
 <aop-project name="Demo06_注入方式"/>
 <aop-project name="Demo33_異常通知"/>
@@ -24,6 +24,7 @@
 <aop-project name="Demo35_公共切入點和切面的優先級"/>
 <aop-project name="Demo38_JdbcTemplate之update(增刪改)"/>
 <aop-project name="Demo17_自動裝配和兼容性"/>
+<aop-project name="Demo47_事務的傳播行為"/>
 <aop-project name="Demo22_組件管理總結"/>
 <aop-project name="Demo45_@Transaction的屬性"/>
 <aop-project name="Demo46_事務的傳播行為演示"/>
