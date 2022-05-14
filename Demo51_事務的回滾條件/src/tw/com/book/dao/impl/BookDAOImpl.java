@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import tw.com.book.MyExeception;
 import tw.com.book.dao.IBookDAO;
+import tw.com.book.exception.MyException;
 
 @Repository
 public class BookDAOImpl implements IBookDAO {
@@ -52,7 +52,7 @@ public class BookDAOImpl implements IBookDAO {
 				new Object[] { uid }, Integer.class);
 
 		if (balance < price)
-			throw new MyExeception("餘額不足!");
+			throw new MyException("餘額不足!");
 		else
 			jdbcTemplate.update("update userinfo set balance = balance - ? where \"UID\" = ?", price, uid);
 	}

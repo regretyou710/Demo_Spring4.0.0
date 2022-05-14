@@ -29,6 +29,7 @@
 <aop-project name="Demo47_事務的傳播行為"/>
 <aop-project name="Demo22_組件管理總結"/>
 <aop-project name="Demo45_@Transaction的屬性"/>
+<aop-project name="Demo53_xml方式的事務配置"/>
 <aop-project name="Demo46_事務的傳播行為演示"/>
 <aop-project name="Demo09-02_集合屬性賦值"/>
 <aop-project name="Demo41_JdbcTemplate之query"/>

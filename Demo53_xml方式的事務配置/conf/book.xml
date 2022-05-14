@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
+
+	<context:component-scan
+		base-package="tw.com.book"></context:component-scan>
+
+	<context:property-placeholder
+		location="db.properties" />
+
+	<!-- 數據源設定 -->
+	<!-- id相當於宣告DruidDataSource類型的變數名稱 -->
+	<bean id="dataSource"
+		class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName" value="${jdbc.driver}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+
+	<!-- 透過數據源配置jdbcTemplate -->
+	<!-- spring將jdbc的功能封裝成一個對象，就叫做JdbcTemplate -->
+	<!-- JdbcTemplate相當一個入口，可以訪問jdbc -->
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<!-- name相當於實例中宣告屬性的名稱 -->
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- 要透過事務管理器管理spring對象中的方法來進行事務管理，就要把事務管理器交給spring管理 -->
+	<!-- 配置事務管理器，管理Connetion物件中的事務，不管是配置xml方式還是開啟註解方式一定要有事務管理器的支持 -->
+	<bean id="dataSourceTransactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!-- 事務管理器管理的是連接對象(Connection)的事務應該如何回滾提交，所以要讓管理器起作用須讓他知道他要管理誰 -->
+		<!-- dataSoruce數據源就是用來創建連接對象的 -->
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- 日誌管理及事務管理都是AOP中簡單的應用 -->
+	<!-- 切面:從目標對象中將公共功能抽取出來存放到某個類中 -->
+	<!-- 在Spring的AOP已經將事務管理這個切面封裝好不需再額外寫class。事務管理器封裝了事務，而事務又是作用在方法上 -->
+	<!-- 既然事務管理器是透過AOP來實現，那麼AOP裡面就必須定義切面、通知、切入點表達式 -->
+	<!-- 切面:事務管理器 -->
+	<!-- 公共功能(非核心代碼):事務的增刪改 -->
+
+	<!-- 只有事務管理器沒有配置事務，就像沒加@Transactional，事務不會被管理 -->
+	<!-- 下列配置在事務管理器中本身就這些通知(方法/功能)只是再透過xml進行二次配置 -->
+	<!-- 通知依賴於切面，所以transaction-manager屬性值為事務管理器id -->
+	<!-- 配置事務通知 -->
+	<tx:advice id="tx"
+		transaction-manager="dataSourceTransactionManager">
+		<tx:attributes>
+			<!-- 在設置好的切入點表達式下，再次進行事務設置 -->
+			<tx:method name="buyBook" />
+			<tx:method name="checkOut" />
+			
+			<!-- 使用通配符方式配置事務通知 -->
+			<!-- select*:以select開頭的"方法名"交給事務管理 -->
+			<!-- 
+			<tx:method name="select*" read-only="true" />
+			<tx:method name="insert*" />
+			<tx:method name="update*" />
+			<tx:method name="delete*" />
+			<tx:method name="*" />
+			 -->
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 通知作用於連接點要透過切入點表達式 -->
+	<!-- 配置切入點表達式 -->
+	<aop:config>
+		<!-- impl底下的類的的方法不一定所有都要進行事務管理，因為可能有些方法不涉及資料庫CRUD，所以可再透過配置事務通知指定哪些方法要被通知 -->
+		<aop:pointcut
+			expression="execution(* tw.com.book.service.impl.*.*(..))" id="cut" />
+		
+		<!-- 通知的引用 -->
+		<!-- 公共切入點的引用 -->
+		<!-- 將事務通知與切入點表達式進行連結 -->
+		<!-- 配置通知 -->
+		<aop:advisor advice-ref="tx" pointcut-ref="cut" />
+	</aop:config>
+</beans>

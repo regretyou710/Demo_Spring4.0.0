@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import tw.com.book.MyExeception;
 import tw.com.book.dao.IBookDAO;
+import tw.com.book.exception.MyException;
 import tw.com.book.service.IBookService;
 
 //@Transactional
@@ -51,7 +51,7 @@ public class BookServiceImpl implements IBookService {
 	* rollbackFor|rollbackForClassName|noRollbackFor|noRollbackForClassName
 	*/
 	
-	@Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = { MyExeception.class }) // 為了讓扣庫存、扣餘額視為同一個事務，所以在這個方法上加上註解
+	@Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = { MyException.class }) // 為了讓扣庫存、扣餘額視為同一個事務，所以在這個方法上加上註解
 	@Override
 	public void buyBook(String bid, String uid) {
 		Integer price = iBookDAO.queryPrice(bid);
