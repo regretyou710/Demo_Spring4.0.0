@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tw.com.book.dao.IBookDAO;
 import tw.com.book.service.IBookService;
 
-//@Transactional
+//@Transactional(1)
 @Service
 public class BookServiceImpl implements IBookService {
 
@@ -18,6 +18,7 @@ public class BookServiceImpl implements IBookService {
 	* @Transactional:對方法中所有的操作作為一個事務進行管理
 	* 在方法上使用，只對方法有效果
 	* 在類上使用，對類中所有的方法都有效果
+	* 若類上及方法上@Transactional的屬性相同時，採就近原則，先用方法上的再往類上面找到使用
 	* 
 	* @Transactional中可以設置的屬性:
 	* propagation:
@@ -31,6 +32,7 @@ public class BookServiceImpl implements IBookService {
 	* rollbackFor|rollbackForClassName|noRollbackFor|noRollbackForClassName
 	*/
 	
+//	@Transactional(1)
 	@Transactional// 為了讓扣庫存、扣餘額視為同一個事務，所以在這個方法上加上註解
 	@Override
 	public void buyBook(String bid, String uid) {

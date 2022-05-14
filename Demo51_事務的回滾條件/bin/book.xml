@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+		
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
+
+	<context:component-scan
+		base-package="tw.com.book"></context:component-scan>
+
+	<context:property-placeholder
+		location="db.properties" />
+
+	<!-- 數據源設定 -->
+	<!-- id相當於宣告DruidDataSource類型的變數名稱 -->
+	<bean id="dataSource"
+		class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName" value="${jdbc.driver}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+
+	<!-- 透過數據源配置jdbcTemplate -->
+	<!-- spring將jdbc的功能封裝成一個對象，就叫做JdbcTemplate -->
+	<!-- JdbcTemplate相當一個入口，可以訪問jdbc -->
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<!-- name相當於實例中宣告屬性的名稱 -->
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- 要透過事務管理器管理spring對象中的方法來進行事務管理，就要把事務管理器交給spring管理 -->
+	<!-- 配置事務管理器，管理Connetion物件中的事務，不管是配置xml方式還是開啟註解方式一定要有事務管理器的支持 -->
+	<bean id="dataSourceTransactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!-- 事務管理器管理的是連接對象(Connection)的事務應該如何回滾提交，所以要讓管理器起作用須讓他知道他要管理誰 -->
+		<!-- dataSoruce數據源就是用來創建連接對象的 -->
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- 因為註解式事務管理是依賴於AspctJ所以需加入Aspect jar包 -->
+	<!-- <tx:annotation-driven>這個標籤寫上後，就可以在當前專案的類上或方法上加載一些關於事務註解進行掃描 -->
+	<!-- 開啟註解功能，即對事務相關的註解進行掃描，解析涵義並執行功能 -->
+	<!-- 開啟註解時需要指定一個事務管理器，因為事務要實現是根據事務管理器去管理實現 -->
+	<!-- transaction-manager的默認值為transactionManager -->
+	<tx:annotation-driven
+		transaction-manager="dataSourceTransactionManager" />
+</beans>

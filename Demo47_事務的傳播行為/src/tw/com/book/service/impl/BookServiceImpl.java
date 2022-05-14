@@ -40,7 +40,8 @@ public class BookServiceImpl implements IBookService {
 	* rollbackFor|rollbackForClassName|noRollbackFor|noRollbackForClassName
 	*/
 	
-	@Transactional(propagation = Propagation.REQUIRED)// 為了讓扣庫存、扣餘額視為同一個事務，所以在這個方法上加上註解
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	//@Transactional// 為了讓扣庫存、扣餘額視為同一個事務，所以在這個方法上加上註解
 	@Override
 	public void buyBook(String bid, String uid) {
 		Integer price = iBookDAO.queryPrice(bid);

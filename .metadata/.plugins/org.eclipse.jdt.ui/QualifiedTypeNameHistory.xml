@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.springframework.beans.factory.config.BeanPostProcessor"/>
 <fullyQualifiedTypeName name="tw.com.ioc.life.Person"/>
 <fullyQualifiedTypeName name="com.alibaba.druid.pool.DruidDataSource"/>
 <fullyQualifiedTypeName name="tw.com.spring.ioc.auto.byName.Dept"/>
@@ -14,7 +13,6 @@
 <fullyQualifiedTypeName name="tw.com.spring.ioc.userModel.dao.impl.UserDAOImpl"/>
 <fullyQualifiedTypeName name="tw.com.spring.ioc.userModel.dao.IUserDAO"/>
 <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Qualifier"/>
-<fullyQualifiedTypeName name="java.lang.Thread"/>
 <fullyQualifiedTypeName name="java.security.interfaces.RSAKey"/>
 <fullyQualifiedTypeName name="tw.com.spring.proxy.IMath"/>
 <fullyQualifiedTypeName name="tw.com.spring.proxy.MathImpl"/>
@@ -45,7 +43,6 @@
 <fullyQualifiedTypeName name="tw.com.book.service.impl.BookServiceImpl"/>
 <fullyQualifiedTypeName name="java.lang.Object"/>
 <fullyQualifiedTypeName name="tw.com.book.dao.impl.BookDAOImpl"/>
-<fullyQualifiedTypeName name="java.lang.RuntimeException"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="org.springframework.context.ApplicationContext"/>
 <fullyQualifiedTypeName name="org.springframework.context.support.ClassPathXmlApplicationContext"/>
@@ -59,5 +56,8 @@
 <fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="org.springframework.transaction.annotation.Transactional"/>
+<fullyQualifiedTypeName name="java.lang.Thread"/>
+<fullyQualifiedTypeName name="java.lang.RuntimeException"/>
+<fullyQualifiedTypeName name="tw.com.book.MyExeception"/>
 <fullyQualifiedTypeName name="org.springframework.transaction.annotation.Propagation"/>
 </qualifiedTypeNameHistroy>

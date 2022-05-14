@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="google-site-verification" content="QSl8rlXGYak0SPdlX0r_tMqD7I6XFuWD1JxR_D9PbyM">
+<meta name="msvalidate.01" content="4775F105590951C69208A1E849EF0F32">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>spring事務中的超時時間很多人都不理解 - 台部落</title>
+<meta name="description" content="
+
+
+
+
+在spring中如何使用事務是一個很大的問題，其中有一個我需要在這篇文章中着重講解一下，就是spring事務中的超時時間問題，很多同學不知道如何才能是這個超時時間生效，導致在使用過程中出現各種各樣的問題。
+1、使用mybatis框">
+<link rel="dns-prefetch preconnect" href="https://www.google-analytics.com/">
+<link rel="dns-prefetch preconnect" href="https://pagead2.googlesyndication.com/">
+<link rel="dns-prefetch preconnect" href="https://googleads.g.doubleclick.net/">
+<link rel="dns-prefetch preconnect" href="https://www.googletagmanager.com/">
+<link rel="shortcut icon" type="image/png" href="https://www.twblogs.net/static/images/favicon.ico">
+<link rel="stylesheet" type="text/css" href="./spring事務中的超時時間很多人都不理解 - 台部落_files/fontello.css">
+<link rel="stylesheet" type="text/css" href="./spring事務中的超時時間很多人都不理解 - 台部落_files/bootstrap.min.css">
+<script src="./spring事務中的超時時間很多人都不理解 - 台部落_files/f(4).txt"></script><script async="" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/async-ads.js.下載"></script><script async="" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/async-ads.js.下載"></script><script src="./spring事務中的超時時間很多人都不理解 - 台部落_files/f(5).txt"></script><script type="text/javascript" async="" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/analytics.js.下載"></script><script src="./spring事務中的超時時間很多人都不理解 - 台部落_files/f(6).txt" id="google_shimpl"></script><script type="text/javascript" async="" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/f(7).txt"></script><script async="" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/gtm.js.下載"></script><script type="text/javascript" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/jquery-3.3.1.min.js.下載"></script>
+<script type="text/javascript" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/lozad.min.js.下載"></script>
+<script type="text/javascript" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/js.cookie.min.js.下載"></script>
+<script type="text/javascript" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/common.js.下載"></script>
+<script type="text/javascript" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/bootstrap.min.js.下載"></script>
+<link rel="stylesheet" type="text/css" href="./spring事務中的超時時間很多人都不理解 - 台部落_files/header.css">
+<link rel="stylesheet" type="text/css" href="./spring事務中的超時時間很多人都不理解 - 台部落_files/main.css">
+<script type="text/javascript" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/main.js.下載"></script>
+<script async="" type="text/javascript" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/login.js.下載"></script>
+<script src="./spring事務中的超時時間很多人都不理解 - 台部落_files/highlight.pack.js.下載"></script>
+<link rel="stylesheet" href="./spring事務中的超時時間很多人都不理解 - 台部落_files/default.css">
+<link rel="alternate" hreflang="zh-Hant" href="https://www.twblogs.net/a/5e98d5806052e1406bdcf984">
+<link rel="alternate" hreflang="zh-Hans" href="https://www.twblogs.net/a/5e98d5806052e1406bdcf984/?lang=zh-cn">
+
+<script async="" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/js"></script>
+<script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-135472877-1');
+    </script>
+<script async="" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/f(8).txt"></script>
+
+
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-WV8L3BL');</script>
+
+<script type="text/javascript" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/article.js.下載"></script>
+
+<script src="./spring事務中的超時時間很多人都不理解 - 台部落_files/cse_element__zh_tw.js.下載" type="text/javascript"></script><link type="text/css" rel="stylesheet" href="./spring事務中的超時時間很多人都不理解 - 台部落_files/default+zh_TW.css"><link type="text/css" rel="stylesheet" href="./spring事務中的超時時間很多人都不理解 - 台部落_files/default(1).css"><meta http-equiv="origin-trial" content="AxujKG9INjsZ8/gUq8+dTruNvk7RjZQ1oFhhgQbcTJKDnZfbzSTE81wvC2Hzaf3TW4avA76LTZEMdiedF1vIbA4AAABueyJvcmlnaW4iOiJodHRwczovL2ltYXNkay5nb29nbGVhcGlzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0="><meta http-equiv="origin-trial" content="Azuce85ORtSnWe1MZDTv68qpaW3iHyfL9YbLRy0cwcCZwVnePnOmkUJlG8HGikmOwhZU22dElCcfrfX2HhrBPAkAAAB7eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A16nvcdeoOAqrJcmjLRpl1I6f3McDD8EfofAYTt/P/H4/AWwB99nxiPp6kA0fXoiZav908Z8etuL16laFPUdfQsAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="AxBHdr0J44vFBQtZUqX9sjiqf5yWZ/OcHRcRMN3H9TH+t90V/j3ENW6C8+igBZFXMJ7G3Pr8Dd13632aLng42wgAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A88BWHFjcawUfKU3lIejLoryXoyjooBXLgWmGh+hNcqMK44cugvsI5YZbNarYvi3roc1fYbHA1AVbhAtuHZflgEAAAB2eyJvcmlnaW4iOiJodHRwczovL2dvb2dsZS5jb206NDQzIiwiZmVhdHVyZSI6IlRydXN0VG9rZW5zIiwiZXhwaXJ5IjoxNjUyNzc0NDAwLCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="AzoawhTRDevLR66Y6MROu167EDncFPBvcKOaQispTo9ouEt5LvcBjnRFqiAByRT+2cDHG1Yj4dXwpLeIhc98/gIAAACFeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjYxMjk5MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A6+nc62kbJgC46ypOwRsNW6RkDn2x7tgRh0wp7jb3DtFF7oEhu1hhm4rdZHZ6zXvnKZLlYcBlQUImC4d3kKihAcAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjYxMjk5MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A/9La288e7MDEU2ifusFnMg1C2Ij6uoa/Z/ylwJIXSsWfK37oESIPbxbt4IU86OGqDEPnNVruUiMjfKo65H/CQwAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjYxMjk5MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><link rel="preload" href="./spring事務中的超時時間很多人都不理解 - 台部落_files/f(9).txt" as="script"><script type="text/javascript" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/f(9).txt"></script><link rel="preload" href="./spring事務中的超時時間很多人都不理解 - 台部落_files/f(10).txt" as="script"><script type="text/javascript" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/f(10).txt"></script><style type="text/css">.gsc-control-cse{font-family:helvetica neue, arial, sans-serif}.gsc-control-cse .gsc-table-result{font-family:helvetica neue, arial, sans-serif}.gsc-refinementsGradient{background:linear-gradient(to left,rgba(255,255,255,1),rgba(255,255,255,0))}.gsc-control-cse{border-color:#FFFFFF;background-color:#FFFFFF}input.gsc-input,.gsc-input-box,.gsc-input-box-hover,.gsc-input-box-focus{border-color:#FD484D}.gsc-search-button-v2,.gsc-search-button-v2:hover,.gsc-search-button-v2:focus{border-color:#FD484D;background-color:#FD484D;background-image:none;filter:none}.gsc-search-button-v2 svg{fill:#FFFFFF}.gsc-tabHeader.gsc-tabhActive,.gsc-refinementHeader.gsc-refinementhActive{color:#CCCCCC;border-color:#CCCCCC;background-color:#FFFFFF}.gsc-tabHeader.gsc-tabhInactive,.gsc-refinementHeader.gsc-refinementhInactive{color:#CCCCCC;border-color:#CCCCCC;background-color:#FFFFFF}.gsc-webResult.gsc-result,.gsc-results .gsc-imageResult{border-color:#FFFFFF;background-color:#FFFFFF}.gsc-webResult.gsc-result:hover{border-color:#FFFFFF;background-color:#FAFAFA}.gs-webResult.gs-result a.gs-title:link,.gs-webResult.gs-result a.gs-title:link b,.gs-imageResult a.gs-title:link,.gs-imageResult a.gs-title:link b{color:#0000CC}.gs-webResult.gs-result a.gs-title:visited,.gs-webResult.gs-result a.gs-title:visited b,.gs-imageResult a.gs-title:visited,.gs-imageResult a.gs-title:visited b{color:#741B47}.gs-webResult.gs-result a.gs-title:hover,.gs-webResult.gs-result a.gs-title:hover b,.gs-imageResult a.gs-title:hover,.gs-imageResult a.gs-title:hover b{color:#FD484D}.gs-webResult.gs-result a.gs-title:active,.gs-webResult.gs-result a.gs-title:active b,.gs-imageResult a.gs-title:active,.gs-imageResult a.gs-title:active b{color:#0000CC}.gsc-cursor-page{color:#0000CC}a.gsc-trailing-more-results:link{color:#0000CC}.gs-webResult:not(.gs-no-results-result):not(.gs-error-result) .gs-snippet,.gs-fileFormatType{color:#000000}.gs-webResult div.gs-visibleUrl{color:#999999}.gs-webResult div.gs-visibleUrl-short{color:#999999}.gsc-cursor-box{border-color:#FFFFFF}.gsc-results .gsc-cursor-box .gsc-cursor-page{border-color:#CCCCCC;background-color:#FFFFFF;color:#CCCCCC}.gsc-results .gsc-cursor-box .gsc-cursor-current-page{border-color:#CCCCCC;background-color:#FFFFFF;color:#CCCCCC}.gsc-webResult.gsc-result.gsc-promotion{border-color:#336699;background-color:#FFFFFF}.gsc-completion-title{color:#0000CC}.gsc-completion-snippet{color:#000000}.gs-promotion a.gs-title:link,.gs-promotion a.gs-title:link *,.gs-promotion .gs-snippet a:link{color:#0000CC}.gs-promotion a.gs-title:visited,.gs-promotion a.gs-title:visited *,.gs-promotion .gs-snippet a:visited{color:#0000CC}.gs-promotion a.gs-title:hover,.gs-promotion a.gs-title:hover *,.gs-promotion .gs-snippet a:hover{color:#0000CC}.gs-promotion a.gs-title:active,.gs-promotion a.gs-title:active *,.gs-promotion .gs-snippet a:active{color:#0000CC}.gs-promotion .gs-snippet,.gs-promotion .gs-title .gs-promotion-title-right,.gs-promotion .gs-title .gs-promotion-title-right *{color:#000000}.gs-promotion .gs-visibleUrl,.gs-promotion .gs-visibleUrl-short{color:#008000}.gcsc-find-more-on-google{color:#0000CC}.gcsc-find-more-on-google-magnifier{fill:#0000CC}</style><style type="text/css">.gscb_a{display:inline-block;font:27px/13px arial,sans-serif}.gsst_a .gscb_a{color:#a1b9ed;cursor:pointer}.gsst_a:hover .gscb_a,.gsst_a:focus .gscb_a{color:#36c}.gsst_a{display:inline-block}.gsst_a{cursor:pointer;padding:0 4px}.gsst_a:hover{text-decoration:none!important}.gsst_b{font-size:16px;padding:0 2px;position:relative;user-select:none;-webkit-user-select:none;white-space:nowrap}.gsst_e{vertical-align:middle;opacity:0.55;}.gsst_a:hover .gsst_e,.gsst_a:focus .gsst_e{opacity:0.72;}.gsst_a:active .gsst_e{opacity:1;}.gsst_f{background:white;text-align:left}.gsst_g{background-color:white;border:1px solid #ccc;border-top-color:#d9d9d9;box-shadow:0 2px 4px rgba(0,0,0,0.2);-webkit-box-shadow:0 2px 4px rgba(0,0,0,0.2);margin:-1px -3px;padding:0 6px}.gsst_h{background-color:white;height:1px;margin-bottom:-1px;position:relative;top:-1px}.gsib_a{width:100%;padding:4px 6px 0}.gsib_a,.gsib_b{vertical-align:top}.gssb_c{border:0;position:absolute;z-index:989}.gssb_e{border:1px solid #ccc;border-top-color:#d9d9d9;box-shadow:0 2px 4px rgba(0,0,0,0.2);-webkit-box-shadow:0 2px 4px rgba(0,0,0,0.2);cursor:default}.gssb_f{visibility:hidden;white-space:nowrap}.gssb_k{border:0;display:block;position:absolute;top:0;z-index:988}.gsdd_a{border:none!important}.gsq_a{padding:0}.gssb_a{padding:0 7px}.gssb_a,.gssb_a td{white-space:nowrap;overflow:hidden;line-height:22px}#gssb_b{font-size:11px;color:#36c;text-decoration:none}#gssb_b:hover{font-size:11px;color:#36c;text-decoration:underline}.gssb_g{text-align:center;padding:8px 0 7px;position:relative}.gssb_h{font-size:15px;height:28px;margin:0.2em;-webkit-appearance:button}.gssb_i{background:#eee}.gss_ifl{visibility:hidden;padding-left:5px}.gssb_i .gss_ifl{visibility:visible}a.gssb_j{font-size:13px;color:#36c;text-decoration:none;line-height:100%}a.gssb_j:hover{text-decoration:underline}.gssb_l{height:1px;background-color:#e5e5e5}.gssb_m{color:#000;background:#fff}.gssb_a{padding:0 9px}.gsib_a{padding:5px 9px 4px 9px}.gscb_a{line-height:27px}.gssb_e{border:0}.gssb_l{margin:5px 0}input.gsc-input::-webkit-input-placeholder{font-size:14px}input.gsc-input:-moz-placeholder{font-size:14px}input.gsc-input::-moz-placeholder{font-size:14px}input.gsc-input:-ms-input-placeholder{font-size:14px}input.gsc-input:focus::-webkit-input-placeholder{color:transparent}input.gsc-input:focus:-moz-placeholder{color:transparent}input.gsc-input:focus::-moz-placeholder{color:transparent}input.gsc-input:focus:-ms-input-placeholder{color:transparent}.gssb_c .gsc-completion-container{position:static}.gssb_c{z-index:5000}.gsc-completion-container table{background:transparent;font-size:inherit;font-family:inherit}.gssb_c > tbody > tr,.gssb_c > tbody > tr > td,.gssb_d,.gssb_d > tbody > tr,.gssb_d > tbody > tr > td,.gssb_e,.gssb_e > tbody > tr,.gssb_e > tbody > tr > td{padding:0;margin:0;border:0}.gssb_a table,.gssb_a table tr,.gssb_a table tr td{padding:0;margin:0;border:0}</style><style type="text/css">.gscb_a{display:inline-block;font:27px/13px arial,sans-serif}.gsst_a .gscb_a{color:#a1b9ed;cursor:pointer}.gsst_a:hover .gscb_a,.gsst_a:focus .gscb_a{color:#36c}.gsst_a{display:inline-block}.gsst_a{cursor:pointer;padding:0 4px}.gsst_a:hover{text-decoration:none!important}.gsst_b{font-size:16px;padding:0 2px;position:relative;user-select:none;-webkit-user-select:none;white-space:nowrap}.gsst_e{vertical-align:middle;opacity:0.55;}.gsst_a:hover .gsst_e,.gsst_a:focus .gsst_e{opacity:0.72;}.gsst_a:active .gsst_e{opacity:1;}.gsst_f{background:white;text-align:left}.gsst_g{background-color:white;border:1px solid #ccc;border-top-color:#d9d9d9;box-shadow:0 2px 4px rgba(0,0,0,0.2);-webkit-box-shadow:0 2px 4px rgba(0,0,0,0.2);margin:-1px -3px;padding:0 6px}.gsst_h{background-color:white;height:1px;margin-bottom:-1px;position:relative;top:-1px}.gsib_a{width:100%;padding:4px 6px 0}.gsib_a,.gsib_b{vertical-align:top}.gssb_c{border:0;position:absolute;z-index:989}.gssb_e{border:1px solid #ccc;border-top-color:#d9d9d9;box-shadow:0 2px 4px rgba(0,0,0,0.2);-webkit-box-shadow:0 2px 4px rgba(0,0,0,0.2);cursor:default}.gssb_f{visibility:hidden;white-space:nowrap}.gssb_k{border:0;display:block;position:absolute;top:0;z-index:988}.gsdd_a{border:none!important}.gsq_a{padding:0}.gssb_a{padding:0 7px}.gssb_a,.gssb_a td{white-space:nowrap;overflow:hidden;line-height:22px}#gssb_b{font-size:11px;color:#36c;text-decoration:none}#gssb_b:hover{font-size:11px;color:#36c;text-decoration:underline}.gssb_g{text-align:center;padding:8px 0 7px;position:relative}.gssb_h{font-size:15px;height:28px;margin:0.2em;-webkit-appearance:button}.gssb_i{background:#eee}.gss_ifl{visibility:hidden;padding-left:5px}.gssb_i .gss_ifl{visibility:visible}a.gssb_j{font-size:13px;color:#36c;text-decoration:none;line-height:100%}a.gssb_j:hover{text-decoration:underline}.gssb_l{height:1px;background-color:#e5e5e5}.gssb_m{color:#000;background:#fff}.gssb_a{padding:0 9px}.gsib_a{padding:5px 9px 4px 9px}.gscb_a{line-height:27px}.gssb_e{border:0}.gssb_l{margin:5px 0}input.gsc-input::-webkit-input-placeholder{font-size:14px}input.gsc-input:-moz-placeholder{font-size:14px}input.gsc-input::-moz-placeholder{font-size:14px}input.gsc-input:-ms-input-placeholder{font-size:14px}input.gsc-input:focus::-webkit-input-placeholder{color:transparent}input.gsc-input:focus:-moz-placeholder{color:transparent}input.gsc-input:focus::-moz-placeholder{color:transparent}input.gsc-input:focus:-ms-input-placeholder{color:transparent}.gssb_c .gsc-completion-container{position:static}.gssb_c{z-index:5000}.gsc-completion-container table{background:transparent;font-size:inherit;font-family:inherit}.gssb_c > tbody > tr,.gssb_c > tbody > tr > td,.gssb_d,.gssb_d > tbody > tr,.gssb_d > tbody > tr > td,.gssb_e,.gssb_e > tbody > tr,.gssb_e > tbody > tr > td{padding:0;margin:0;border:0}.gssb_a table,.gssb_a table tr,.gssb_a table tr td{padding:0;margin:0;border:0}</style><link rel="preload" href="./spring事務中的超時時間很多人都不理解 - 台部落_files/f(9).txt" as="script"><script type="text/javascript" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/f(9).txt"></script><link rel="preload" href="./spring事務中的超時時間很多人都不理解 - 台部落_files/f(10).txt" as="script"><script type="text/javascript" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/f(10).txt"></script></head>
+<body style="padding: 0px 0px 154px;">
+<div class="header-wrapper">
+<div class="container">
+<header>
+<div class="header-top">
+<a class="search-toggle">
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/search-grey-bold.svg">
+</a>
+<a class="logo" href="https://www.twblogs.net/">
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/logo.png" data-loaded="true">
+<span>台部落</span>
+</a>
+<div class="meta-bar">
+<div id="google-search-bar">
+<div id="___gcse_0"><div class="gsc-control-cse gsc-control-cse-zh-TW"><div class="gsc-control-wrapper-cse" dir="ltr"><form class="gsc-search-box gsc-search-box-tools" accept-charset="utf-8"><table cellspacing="0" cellpadding="0" class="gsc-search-box"><tbody><tr><td class="gsc-input"><div class="gsc-input-box" id="gsc-iw-id1"><table cellspacing="0" cellpadding="0" id="gs_id50" class="gstl_50 gsc-input" style="width: 100%; padding: 0px;"><tbody><tr><td id="gs_tti50" class="gsib_a"><input autocomplete="off" type="text" size="10" class="gsc-input" name="search" title="搜尋" id="gsc-i-id1" dir="ltr" spellcheck="false" style="width: 100%; padding: 0px; border: none; margin: 0px; height: auto; outline: none;"></td><td class="gsib_b"><div class="gsst_b" id="gs_st50" dir="ltr"><a class="gsst_a" href="javascript:void(0)" title="清除搜尋框" role="button" style="display: none;"><span class="gscb_a" id="gs_cb50" aria-hidden="true">×</span></a></div></td></tr></tbody></table></div></td><td class="gsc-search-button"><button class="gsc-search-button gsc-search-button-v2"><svg width="13" height="13" viewBox="0 0 13 13"><title>搜尋</title><path d="m4.8495 7.8226c0.82666 0 1.5262-0.29146 2.0985-0.87438 0.57232-0.58292 0.86378-1.2877 0.87438-2.1144 0.010599-0.82666-0.28086-1.5262-0.87438-2.0985-0.59352-0.57232-1.293-0.86378-2.0985-0.87438-0.8055-0.010599-1.5103 0.28086-2.1144 0.87438-0.60414 0.59352-0.8956 1.293-0.87438 2.0985 0.021197 0.8055 0.31266 1.5103 0.87438 2.1144 0.56172 0.60414 1.2665 0.8956 2.1144 0.87438zm4.4695 0.2115 3.681 3.6819-1.259 1.284-3.6817-3.7 0.0019784-0.69479-0.090043-0.098846c-0.87973 0.76087-1.92 1.1413-3.1207 1.1413-1.3553 0-2.5025-0.46363-3.4417-1.3909s-1.4088-2.0686-1.4088-3.4239c0-1.3553 0.4696-2.4966 1.4088-3.4239 0.9392-0.92727 2.0864-1.3969 3.4417-1.4088 1.3553-0.011889 2.4906 0.45771 3.406 1.4088 0.9154 0.95107 1.379 2.0924 1.3909 3.4239 0 1.2126-0.38043 2.2588-1.1413 3.1385l0.098834 0.090049z"></path></svg></button></td><td class="gsc-clear-button"><div class="gsc-clear-button" title="清除結果">&nbsp;</div></td></tr></tbody></table></form><div class="gsc-results-wrapper-overlay"><div class="gsc-results-close-btn" tabindex="0"></div><div class="gsc-positioningWrapper"><div class="gsc-tabsAreaInvisible"><div aria-label="refinement" role="tab" class="gsc-tabHeader gsc-inline-block gsc-tabhActive">自訂搜尋</div><span class="gs-spacer"> </span></div></div><div class="gsc-positioningWrapper"><div class="gsc-refinementsAreaInvisible"></div></div><div class="gsc-above-wrapper-area-invisible"><table cellspacing="0" cellpadding="0" class="gsc-above-wrapper-area-container"><tbody><tr><td class="gsc-result-info-container"><div class="gsc-result-info-invisible"></div></td><td class="gsc-orderby-container"><div class="gsc-orderby-invisible"><div class="gsc-orderby-label gsc-inline-block">排序依據：</div><div class="gsc-option-menu-container gsc-inline-block"><div class="gsc-selected-option-container gsc-inline-block"><div class="gsc-selected-option">Relevance</div><div class="gsc-option-selector"></div></div><div class="gsc-option-menu-invisible"><div class="gsc-option-menu-item gsc-option-menu-item-highlighted"><div class="gsc-option">Relevance</div></div><div class="gsc-option-menu-item"><div class="gsc-option">Date</div></div></div></div></div></td></tr></tbody></table></div><div class="gsc-adBlockInvisible"></div><div class="gsc-wrapper"><div class="gsc-adBlockInvisible"></div><div class="gsc-resultsbox-invisible"><div class="gsc-resultsRoot gsc-tabData gsc-tabdActive"><div><div class="gsc-expansionArea"></div></div></div></div></div></div><div class="gsc-modal-background-image" tabindex="0"></div></div></div></div>
+</div>
+<a href="https://www.twblogs.net/account/register?src=/" target="_blank" class="signup">註冊</a>
+<a class="login" href="https://www.twblogs.net/a/5e98d5806052e1406bdcf984#">登錄</a>
+<a href="https://www.twblogs.net/mp/postedit/" class="write-btn">
+寫文章
+</a>
+<a id="menu-icon">
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/menu.svg">
+</a>
+</div>
+</div>
+</header>
+<div id="google-search-layer">
+<div id="___gcse_1"><div class="gsc-control-cse gsc-control-cse-zh-TW"><div class="gsc-control-wrapper-cse" dir="ltr"><form class="gsc-search-box gsc-search-box-tools" accept-charset="utf-8"><table cellspacing="0" cellpadding="0" class="gsc-search-box"><tbody><tr><td class="gsc-input"><div class="gsc-input-box" id="gsc-iw-id2"><table cellspacing="0" cellpadding="0" id="gs_id51" class="gstl_51 gsc-input" style="width: 100%; padding: 0px;"><tbody><tr><td id="gs_tti51" class="gsib_a"><input autocomplete="off" type="text" size="10" class="gsc-input" name="search" title="搜尋" id="gsc-i-id2" dir="ltr" spellcheck="false" style="width: 100%; padding: 0px; border: none; margin: 0px; height: auto; outline: none;"></td><td class="gsib_b"><div class="gsst_b" id="gs_st51" dir="ltr"><a class="gsst_a" href="javascript:void(0)" title="清除搜尋框" role="button" style="display: none;"><span class="gscb_a" id="gs_cb51" aria-hidden="true">×</span></a></div></td></tr></tbody></table></div></td><td class="gsc-search-button"><button class="gsc-search-button gsc-search-button-v2"><svg width="13" height="13" viewBox="0 0 13 13"><title>搜尋</title><path d="m4.8495 7.8226c0.82666 0 1.5262-0.29146 2.0985-0.87438 0.57232-0.58292 0.86378-1.2877 0.87438-2.1144 0.010599-0.82666-0.28086-1.5262-0.87438-2.0985-0.59352-0.57232-1.293-0.86378-2.0985-0.87438-0.8055-0.010599-1.5103 0.28086-2.1144 0.87438-0.60414 0.59352-0.8956 1.293-0.87438 2.0985 0.021197 0.8055 0.31266 1.5103 0.87438 2.1144 0.56172 0.60414 1.2665 0.8956 2.1144 0.87438zm4.4695 0.2115 3.681 3.6819-1.259 1.284-3.6817-3.7 0.0019784-0.69479-0.090043-0.098846c-0.87973 0.76087-1.92 1.1413-3.1207 1.1413-1.3553 0-2.5025-0.46363-3.4417-1.3909s-1.4088-2.0686-1.4088-3.4239c0-1.3553 0.4696-2.4966 1.4088-3.4239 0.9392-0.92727 2.0864-1.3969 3.4417-1.4088 1.3553-0.011889 2.4906 0.45771 3.406 1.4088 0.9154 0.95107 1.379 2.0924 1.3909 3.4239 0 1.2126-0.38043 2.2588-1.1413 3.1385l0.098834 0.090049z"></path></svg></button></td><td class="gsc-clear-button"><div class="gsc-clear-button" title="清除結果">&nbsp;</div></td></tr></tbody></table></form><div class="gsc-results-wrapper-overlay"><div class="gsc-results-close-btn" tabindex="0"></div><div class="gsc-positioningWrapper"><div class="gsc-tabsAreaInvisible"><div aria-label="refinement" role="tab" class="gsc-tabHeader gsc-inline-block gsc-tabhActive">自訂搜尋</div><span class="gs-spacer"> </span></div></div><div class="gsc-positioningWrapper"><div class="gsc-refinementsAreaInvisible"></div></div><div class="gsc-above-wrapper-area-invisible"><table cellspacing="0" cellpadding="0" class="gsc-above-wrapper-area-container"><tbody><tr><td class="gsc-result-info-container"><div class="gsc-result-info-invisible"></div></td><td class="gsc-orderby-container"><div class="gsc-orderby-invisible"><div class="gsc-orderby-label gsc-inline-block">排序依據：</div><div class="gsc-option-menu-container gsc-inline-block"><div class="gsc-selected-option-container gsc-inline-block"><div class="gsc-selected-option">Relevance</div><div class="gsc-option-selector"></div></div><div class="gsc-option-menu-invisible"><div class="gsc-option-menu-item gsc-option-menu-item-highlighted"><div class="gsc-option">Relevance</div></div><div class="gsc-option-menu-item"><div class="gsc-option">Date</div></div></div></div></div></td></tr></tbody></table></div><div class="gsc-adBlockInvisible"></div><div class="gsc-wrapper"><div class="gsc-adBlockInvisible"></div><div class="gsc-resultsbox-invisible"><div class="gsc-resultsRoot gsc-tabData gsc-tabdActive"><div><div class="gsc-expansionArea"></div></div></div></div></div></div><div class="gsc-modal-background-image" tabindex="0"></div></div></div></div>
+</div>
+</div>
+</div>
+
+<div class="mobile-menu-background">
+</div>
+<div class="mobile-menu">
+<img class="mobile-menu-close" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/cross.svg">
+</div>
+
+<div id="login-layer-wrapper" class="overlay">
+<div class="login-layer">
+<img class="login-layer-close-button" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/cross.svg">
+<div class="user-form">
+<form id="login-form" action="https://www.twblogs.net/account/login?src=https://www.twblogs.net/a/5e98d5806052e1406bdcf984" method="post">
+<input type="hidden" name="_xsrf" value="2|ceb8b50c|7e7ecaff48cc9551702b2b6d394bb6dd|1652483083">
+<ul class="form-ul">
+<li>
+<input name="email" type="text" placeholder="電子郵件">
+</li>
+<li>
+<input name="passwd" type="password" value="" placeholder="請輸入密碼" autocomplete="off">
+</li>
+<li>
+<div class="err-info" style="display:none">請輸入正確的登錄賬號或密碼</div>
+</li>
+<li>
+<input type="submit" value="登录">
+</li>
+<li class="reg-link-container">
+<a href="https://www.twblogs.net/account/register?src=/" target="_blank" class="reg-link">註冊</a>
+</li>
+<li class="reg-link-container">
+<a href="https://www.twblogs.net/account/password_forgot/" target="_blank" class="reg-link">忘記密碼</a>
+</li>
+</ul>
+</form>
+</div>
+</div>
+</div>
+<script>
+(function() {
+var cx = 'partner-pub-2073744953016040:8541733644';
+var gcse = document.createElement('script');
+gcse.type = 'text/javascript';
+gcse.async = true;
+gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+var s = document.getElementsByTagName('script')[0];
+s.parentNode.insertBefore(gcse, s);
+})();
+</script>
+<div id="backTop" style="right: 1rem; /**display: none;"><i class="icon-up-open-1"></i></div>
+<div class="container" id="content-wrapper" style="height: auto !important;">
+<div id="toolbox">
+<ul style="position:fixed;">
+<li class="vote vote-up"><i class="icon-thumbs-up-alt" title=""></i></li>
+<li class="vote vote-down"><i class="icon-thumbs-down-alt" title=""></i></li>
+</ul>
+</div>
+<div class="content" style="height: auto !important;">
+<div class="main-content" style="height: auto !important;">
+<div class="article-wrapper" style="height: auto !important;">
+<nav aria-label="breadcrumb">
+<ol class="breadcrumb">
+<li class="breadcrumb-item"><a href="https://www.twblogs.net/">首頁</a></li>
+<li class="breadcrumb-item"><a href="https://www.twblogs.net/c/5b7aeb7c2b7177392c971d56/">spring源碼</a></li>
+<li class="breadcrumb-item active" aria-current="page">正文</li>
+</ol>
+</nav>
+<h1>spring事務中的超時時間很多人都不理解</h1>
+<div class="post-meta">
+<span class="original">原創</span>
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/user.svg" data-loaded="true">
+<a href="https://www.twblogs.net/u/5c6d97ebbd9eee5bea9dff9b" target="_blank">黄山技术猿</a>
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/clock.svg" data-loaded="true">
+<span> 2020-04-17 06:00 </span>
+</div>
+<div class="article-content" style="height: auto !important;">
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+<path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+</svg>
+<p>在spring中如何使用事務是一個很大的問題，其中有一個我需要在這篇文章中着重講解一下，就是spring事務中的超時時間問題，很多同學不知道如何才能是這個超時時間生效，導致在使用過程中出現各種各樣的問題。</p>
+<p>1、使用mybatis框架來做數據庫操作<br>
+代碼案例如下：</p>
+<pre><code class="prism language-java hljs "><span class="token annotation punctuation"><span class="hljs-annotation">@Transactional</span></span><span class="token punctuation">(</span>propagation <span class="token operator">=</span> Propagation<span class="token punctuation">.</span>REQUIRED<span class="token punctuation">,</span>timeout <span class="token operator">=</span> <span class="token number"><span class="hljs-number">5</span></span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation"><span class="hljs-annotation">@Override</span></span>
+    <span class="token keyword"><span class="hljs-keyword">public</span></span> <span class="token keyword"><span class="hljs-keyword">int</span></span> <span class="token function"><span class="hljs-title">addArea</span></span><span class="token punctuation">(</span>ConsultConfigArea area<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword"><span class="hljs-keyword">int</span></span> i <span class="token operator">=</span> commonMapper<span class="token punctuation">.</span><span class="token function">addArea</span><span class="token punctuation">(</span>area<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword"><span class="hljs-keyword">try</span></span> <span class="token punctuation">{</span>
+            TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number"><span class="hljs-number">7</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword"><span class="hljs-keyword">catch</span></span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword"><span class="hljs-keyword">return</span></span> i<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<p>可以看到在@Transactional註解裏面設置了一個timeout=5，這裏的時間單位是秒。我們在程序裏面休眠了7秒，我們測試一下：<br>
+保存一個“XJ77”的數據，測試代碼如下：</p>
+<pre><code class="prism language-java hljs ">    <span class="token annotation punctuation"><span class="hljs-annotation">@Test</span></span>
+    <span class="token keyword"><span class="hljs-keyword">public</span></span> <span class="token keyword"><span class="hljs-keyword">void</span></span> <span class="token function"><span class="hljs-title">addAreaTest</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        AreaService bean <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>AreaService<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ConsultConfigArea area <span class="token operator">=</span> <span class="token keyword"><span class="hljs-keyword">new</span></span> <span class="token class-name">ConsultConfigArea</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        area<span class="token punctuation">.</span><span class="token function">setAreaCode</span><span class="token punctuation">(</span><span class="token string"><span class="hljs-string">"XJ77"</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        area<span class="token punctuation">.</span><span class="token function">setAreaName</span><span class="token punctuation">(</span><span class="token string"><span class="hljs-string">"XJ77"</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        area<span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token string"><span class="hljs-string">"1"</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        bean<span class="token punctuation">.</span><span class="token function">addArea</span><span class="token punctuation">(</span>area<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<p>單元測試的日誌打印如下：<br>
+從日誌打印效果來看，確實是已經提交了事務的，跟我們的預期不一樣，事務設置的超時時間是5s，休眠了7s但是事務還是提交了。<img alt="在這裏插入圖片描述" class="lazyload" referrerpolicy="no-referrer" data-original="https://pic1.xuehuaimg.com/proxy/csdn/https://img-blog.csdnimg.cn/20200416141317281.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x1b3lhbmdfamF2YQ==,size_16,color_FFFFFF,t_70"><br>
+數據庫中的數據:<br>
+數據也成功的插入了<br>
+<img alt="" class="lazyload" referrerpolicy="no-referrer" data-original="https://pic1.xuehuaimg.com/proxy/csdn/https://img-blog.csdnimg.cn/20200416141456155.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x1b3lhbmdfamF2YQ==,size_16,color_FFFFFF,t_70"></p>
+<p><strong>從這個現象來看，是不是意味着spring事務註解設置的timeout失效了呢？</strong></p>
+<p>爲什麼會這樣呢？我們來讀讀源碼<br>
+1、首先我們看看@Transactional(propagation = Propagation.REQUIRED,timeout = 5)中的timeout是如何讀取的。</p>
+<p>我們來到事務通知類TransactionInterceptor<br>
+<img alt="在這裏插入圖片描述" class="lazyload" referrerpolicy="no-referrer" data-original="https://pic1.xuehuaimg.com/proxy/csdn/https://img-blog.csdnimg.cn/20200416142007463.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x1b3lhbmdfamF2YQ==,size_16,color_FFFFFF,t_70"><br>
+開啓事務<br>
+<img alt="在這裏插入圖片描述" class="lazyload" referrerpolicy="no-referrer" data-original="https://pic1.xuehuaimg.com/proxy/csdn/https://img-blog.csdnimg.cn/20200416142052446.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x1b3lhbmdfamF2YQ==,size_16,color_FFFFFF,t_70"><br>
+開啓事務<br>
+<img alt="在這裏插入圖片描述" class="lazyload" referrerpolicy="no-referrer" data-original="https://pic1.xuehuaimg.com/proxy/csdn/https://img-blog.csdnimg.cn/202004161421348.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x1b3lhbmdfamF2YQ==,size_16,color_FFFFFF,t_70"><br>
+dobegin<br>
+在dobegin中從連接池中獲取到連接對象<br>
+<img alt="在這裏插入圖片描述" class="lazyload" referrerpolicy="no-referrer" data-original="https://pic1.xuehuaimg.com/proxy/csdn/https://img-blog.csdnimg.cn/20200416142204677.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x1b3lhbmdfamF2YQ==,size_16,color_FFFFFF,t_70"><br>
+在dobegin方法中把超時時間設置到一個<strong>deadline</strong>變量中<br>
+<img alt="在這裏插入圖片描述" class="lazyload" referrerpolicy="no-referrer" data-original="https://pic1.xuehuaimg.com/proxy/csdn/https://img-blog.csdnimg.cn/2020041614244232.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x1b3lhbmdfamF2YQ==,size_16,color_FFFFFF,t_70"><br>
+<img alt="在這裏插入圖片描述" class="lazyload" referrerpolicy="no-referrer" data-original="https://pic1.xuehuaimg.com/proxy/csdn/https://img-blog.csdnimg.cn/20200416142459121.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x1b3lhbmdfamF2YQ==,size_16,color_FFFFFF,t_70"><br>
+以上就是spring中把超時時間設置到了一個<strong>deadline</strong>變量中，接下來我們讀讀mybatis源碼：<br>
+int i = commonMapper.addArea(area);執行流程</p><div class="google-auto-placed ap_container" style="width: 100%; height: auto; clear: both; text-align: center;"><ins data-ad-format="auto" class="adsbygoogle adsbygoogle-noablate" data-ad-client="ca-pub-2073744953016040" data-adsbygoogle-status="done" style="display: block; margin: auto; background-color: transparent; height: 280px; overflow: hidden;" data-ad-status="filled"><ins id="aswift_3_expand" style="border: none; height: 280px; width: 872px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;" tabindex="0" title="Advertisement" aria-label="Advertisement"><ins id="aswift_3_anchor" style="border: none; height: 280px; width: 872px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block; overflow: visible;"><iframe id="aswift_3" name="aswift_3" style="left:0;position:absolute;top:0;border:0;width:872px !IMPORTANT;height:280px !IMPORTANT" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="872" height="280" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/ads.html" data-google-container-id="a!4" data-google-query-id="CIuJnJrL3fcCFZkXYAodW_MIWw" data-load-complete="true"></iframe></ins></ins></ins></div>
+<p>MapperProxy<br>
+<img alt="在這裏插入圖片描述" class="lazyload" referrerpolicy="no-referrer" data-original="https://pic1.xuehuaimg.com/proxy/csdn/https://img-blog.csdnimg.cn/20200416143007391.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x1b3lhbmdfamF2YQ==,size_16,color_FFFFFF,t_70"><br>
+最終執行到這裏<br>
+<img alt="在這裏插入圖片描述" class="lazyload" referrerpolicy="no-referrer" data-original="https://pic1.xuehuaimg.com/proxy/csdn/https://img-blog.csdnimg.cn/20200416143317225.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x1b3lhbmdfamF2YQ==,size_16,color_FFFFFF,t_70"><br>
+進入到prepareStatement方法<br>
+<img alt="在這裏插入圖片描述" class="lazyload" referrerpolicy="no-referrer" data-original="https://pic1.xuehuaimg.com/proxy/csdn/https://img-blog.csdnimg.cn/20200416144204524.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x1b3lhbmdfamF2YQ==,size_16,color_FFFFFF,t_70"><br>
+從這裏獲取超時時間，我們看看transaction.getTimeout().<br>
+<img alt="在這裏插入圖片描述" class="lazyload" referrerpolicy="no-referrer" data-original="https://pic1.xuehuaimg.com/proxy/csdn/https://img-blog.csdnimg.cn/20200416144229893.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x1b3lhbmdfamF2YQ==,size_16,color_FFFFFF,t_70"><br>
+從ThreadLocal中獲取連接對象，這個ThreadLocal的值是spring中的dobegin方法中設置的<br>
+<img alt="在這裏插入圖片描述" class="lazyload" referrerpolicy="no-referrer" data-original="https://pic1.xuehuaimg.com/proxy/csdn/https://img-blog.csdnimg.cn/20200416144328543.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x1b3lhbmdfamF2YQ==,size_16,color_FFFFFF,t_70"><br>
+<img alt="在這裏插入圖片描述" class="lazyload" referrerpolicy="no-referrer" data-original="https://pic1.xuehuaimg.com/proxy/csdn/https://img-blog.csdnimg.cn/20200416144343675.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x1b3lhbmdfamF2YQ==,size_16,color_FFFFFF,t_70"><br>
+<img alt="在這裏插入圖片描述" class="lazyload" referrerpolicy="no-referrer" data-original="https://pic1.xuehuaimg.com/proxy/csdn/https://img-blog.csdnimg.cn/20200416144431777.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x1b3lhbmdfamF2YQ==,size_16,color_FFFFFF,t_70"><br>
+把從spring事務中配置的超時時間設置到了statement對象中<br>
+<img alt="在這裏插入圖片描述" class="lazyload" referrerpolicy="no-referrer" data-original="https://pic1.xuehuaimg.com/proxy/csdn/https://img-blog.csdnimg.cn/20200416144539974.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x1b3lhbmdfamF2YQ==,size_16,color_FFFFFF,t_70"><br>
+<img alt="在這裏插入圖片描述" class="lazyload" referrerpolicy="no-referrer" data-original="https://pic1.xuehuaimg.com/proxy/csdn/https://img-blog.csdnimg.cn/202004161450004.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x1b3lhbmdfamF2YQ==,size_16,color_FFFFFF,t_70"><br>
+<strong>從mybatis源碼來看，spring事務註解設置的超時時間，最終在mybatis裏面是設置到了statement對象中了，是用jdbc對象來控制sql的執行時間的，如果執行時間超過了設置時間就會拋出異常，這個異常就會被spring事務切面捕獲到最終導致事務回滾</strong><br>
+<img alt="在這裏插入圖片描述" class="lazyload" referrerpolicy="no-referrer" data-original="https://pic1.xuehuaimg.com/proxy/csdn/https://img-blog.csdnimg.cn/20200416145229562.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x1b3lhbmdfamF2YQ==,size_16,color_FFFFFF,t_70"><br>
+其實這裏休眠10s是不影響mybatis的sql執行的，sql執行就是5s，如果超過5s就會拋出異常，而這個10s是我們的業務代碼不會影響mybatis的sql執行。</p>
+<p>所以透過現象看本質，我們業務代碼裏面休眠10s最終事務提交了，這個是正常現象，因爲sql執行沒有超過5s的。</p>
+</div>
+<div class="ads-article-bottom-match">
+<ins class="adsbygoogle" style="display: block; height: 436px; overflow: hidden;" data-ad-format="autorelaxed" data-ad-client="ca-pub-2073744953016040" data-ad-slot="3534050590" data-adsbygoogle-status="done" data-ad-status="filled"><ins id="aswift_0_expand" style="border: none; height: 436px; width: 872px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;" tabindex="0" title="Advertisement" aria-label="Advertisement"><ins id="aswift_0_anchor" style="border: none; height: 436px; width: 872px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block;"><iframe id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0;width:872px !IMPORTANT;height:436px !IMPORTANT" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="872" height="436" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/ads(1).html" data-google-container-id="a!1" data-google-query-id="COSyiJrL3fcCFeDVTAIdvF8M1g" data-load-complete="true"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+<ul class="tag-list">
+<li>
+<a href="https://www.twblogs.net/t/5c99b347bd9eee425007ecaa" target="_blank" class="label-link">spring源碼</a>
+</li>
+</ul>
+<div id="comment-form-wrapper">
+<div class="section-head">發表評論</div>
+<form id="comment-form" class="comment-form" action="https://www.twblogs.net/account/register" method="post">
+<input type="hidden" name="_xsrf" value="2|ceb8b50c|7e7ecaff48cc9551702b2b6d394bb6dd|1652483083">
+<input name="post_id" value="5e98d5806052e1406bdcf984" class="hidden">
+<textarea autocomplete="off" rows="2" cols="50" placeholder="登錄以後才評論..." disabled=""></textarea>
+<a class="login" href="https://www.twblogs.net/a/5e98d5806052e1406bdcf984#">登录</a>
+</form>
+</div>
+<div id="article-comments">
+<div class="section-head">所有評論</div>
+<div id="comment-list">
+還沒有人評論，想成為第一個評論的人麼? 請在上方評論欄輸入並且點擊發布.
+</div>
+</div>
+<div class="related-post-list">
+<div class="section-head">相關文章</div>
+<div class="related-posts">
+<div class="list-item">
+<h4 class="list-item-title">
+<a href="https://www.twblogs.net/a/5f0227930b1faa371958e58e" target="_blank" title="PropertyPlaceholderConfigurer工作原理">
+PropertyPlaceholderConfigurer工作原理
+</a>
+</h4>
+<p class="post-excerpt">
+<a href="https://www.twblogs.net/a/5f0227930b1faa371958e58e" target="_blank" title="PropertyPlaceholderConfigurer工作原理">
+類繼承關係
+代碼分析
+PropertiesLoaderSupport類是一個抽象類，定義了一些基礎性的操作，可以從聲明的方法上看出來：
+往下走，就看出東西來了。PropertyResourceConfigurer類是非常重要的
+</a>
+</p>
+<div class="post-meta">
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/user.svg">
+<a href="https://www.twblogs.net/u/5b998c1e2b717757338fcf7f">小雨的光</a>
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/clock.svg">
+<span>2020-07-06 03:18:43</span>
+</div>
+</div>
+<div class="list-item">
+<h4 class="list-item-title">
+<a href="https://www.twblogs.net/a/5f0227936acbc4367a250ac3" target="_blank" title="AutowiredAnnotationBeanPostProcessor工作原理">
+AutowiredAnnotationBeanPostProcessor工作原理
+</a>
+</h4>
+<p class="post-excerpt">
+<a href="https://www.twblogs.net/a/5f0227936acbc4367a250ac3" target="_blank" title="AutowiredAnnotationBeanPostProcessor工作原理">
+SpringBoot中不需要再使用PropertyPlaceholderConfigurer來注入屬性了，而是用@Value等註解替換了。@Value註解的解析和@Autowired註解用了同一套邏輯。所以，我們一起通過分析@Au
+</a>
+</p>
+<div class="post-meta">
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/user.svg">
+<a href="https://www.twblogs.net/u/5b998c1e2b717757338fcf7f">小雨的光</a>
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/clock.svg">
+<span>2020-07-06 03:18:43</span>
+</div>
+</div>
+<div class="list-item">
+<h4 class="list-item-title">
+<a href="https://www.twblogs.net/a/5f022793d33e2533b014fa3d" target="_blank" title="BeanWrapper的使用">
+BeanWrapper的使用
+</a>
+</h4>
+<p class="post-excerpt">
+<a href="https://www.twblogs.net/a/5f022793d33e2533b014fa3d" target="_blank" title="BeanWrapper的使用">
+@Component
+public class AppBoot implements CommandLineRunner {
+private String id;
+@Override
+public void run(Strin
+</a>
+</p>
+<div class="post-meta">
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/user.svg">
+<a href="https://www.twblogs.net/u/5b998c1e2b717757338fcf7f">小雨的光</a>
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/clock.svg">
+<span>2020-07-06 03:18:43</span>
+</div>
+</div>
+<div class="list-item">
+<h4 class="list-item-title">
+<a href="https://www.twblogs.net/a/5f02278841b2036d5095d4cd" target="_blank" title="RestTemplate工作原理及攔截器的使用">
+RestTemplate工作原理及攔截器的使用
+</a>
+</h4>
+<p class="post-excerpt">
+<a href="https://www.twblogs.net/a/5f02278841b2036d5095d4cd" target="_blank" title="RestTemplate工作原理及攔截器的使用">
+RestTemplate的使用
+new RestTemplate().getForObject("http://www.baidu.com", String.class);
+源碼分析
+getForObject()方法源碼：
+@
+</a>
+</p>
+<div class="post-meta">
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/user.svg">
+<a href="https://www.twblogs.net/u/5b998c1e2b717757338fcf7f">小雨的光</a>
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/clock.svg">
+<span>2020-07-06 03:18:32</span>
+</div>
+</div>
+<div class="list-item">
+<h4 class="list-item-title">
+<a href="https://www.twblogs.net/a/5f00030b9644181341a1788d" target="_blank" title="Spring源碼分析 加載資源並資源裝配對象">
+Spring源碼分析 加載資源並資源裝配對象
+</a>
+</h4>
+<p class="post-excerpt">
+<a href="https://www.twblogs.net/a/5f00030b9644181341a1788d" target="_blank" title="Spring源碼分析 加載資源並資源裝配對象">
+Spring源碼分析 加載資源並資源裝配對象
+XmlBeanFactory 源碼如下
+資源載入
+public class XmlBeanFactory extends DefaultListableBeanFactory {
+</a>
+</p>
+<div class="post-meta">
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/user.svg">
+<a href="https://www.twblogs.net/u/5cd049f8bd9eee6726c90110">蓝天/zachary</a>
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/clock.svg">
+<span>2020-07-04 12:18:19</span>
+</div>
+</div>
+<div class="list-item">
+<h4 class="list-item-title">
+<a href="https://www.twblogs.net/a/5efff9700b1faa371958b12f" target="_blank" title="Spring源碼分析 專欄文章">
+Spring源碼分析 專欄文章
+</a>
+</h4>
+<p class="post-excerpt">
+<a href="https://www.twblogs.net/a/5efff9700b1faa371958b12f" target="_blank" title="Spring源碼分析 專欄文章">
+Spring源碼分析 專欄文章
+Spring源碼分析 BeanFactory與FactoryBean
+Spring源碼分析 加載資源並資源裝配對象
+Spring源碼分析 Bean創建和獲取
+Spring源碼分析 IOC依賴注入
+S
+</a>
+</p>
+<div class="post-meta">
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/user.svg">
+<a href="https://www.twblogs.net/u/5cd049f8bd9eee6726c90110">蓝天/zachary</a>
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/clock.svg">
+<span>2020-07-04 11:37:20</span>
+</div>
+</div>
+<div class="list-item">
+<h4 class="list-item-title">
+<a href="https://www.twblogs.net/a/5eff2db56acbc4367a24c631" target="_blank" title="Spring(一)源碼之@Configuration、@ComponentScan、@Bean的使用">
+Spring(一)源碼之@Configuration、@ComponentScan、@Bean的使用
+</a>
+</h4>
+<p class="post-excerpt">
+<a href="https://www.twblogs.net/a/5eff2db56acbc4367a24c631" target="_blank" title="Spring(一)源碼之@Configuration、@ComponentScan、@Bean的使用">
+最近在整理一些spring相關的知識,就順帶在這記錄一下總結一下，給自己看也希望能幫助到一些正在學習以及一直在學習的夥伴。
+本文內容記錄一下@Configuration註解的使用以及它與xml文件是如何對應的。
+自從spring3.0開始
+</a>
+</p>
+<div class="post-meta">
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/user.svg">
+<a href="https://www.twblogs.net/u/5e7cdf86bd9eee21168658f7">Lesser Flamingo</a>
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/clock.svg">
+<span>2020-07-03 21:08:05</span>
+</div>
+</div>
+<div class="list-item">
+<h4 class="list-item-title">
+<a href="https://www.twblogs.net/a/5efec6a441b2036d5095813d" target="_blank" title="spring源碼分析之如何解決循環依賴">
+spring源碼分析之如何解決循環依賴
+</a>
+</h4>
+<p class="post-excerpt">
+<a href="https://www.twblogs.net/a/5efec6a441b2036d5095813d" target="_blank" title="spring源碼分析之如何解決循環依賴">
+spring-ioc中循環依賴的問題，也算是高頻的面試問題了，今天跟大家一起來總結一下spring-ioc中是如何解決循環依賴的，相信大家是可以從這篇文章中徹底理解spring容器如何幫我們解決循環依賴，爲了更好的理解spring
+</a>
+</p>
+<div class="post-meta">
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/user.svg">
+<a href="https://www.twblogs.net/u/5bde4cbd2b717720b51bcf6d">菜鸟的奋斗ing</a>
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/clock.svg">
+<span>2020-07-03 13:48:19</span>
+</div>
+</div>
+<div class="list-item">
+<h4 class="list-item-title">
+<a href="https://www.twblogs.net/a/5efe16d75352062f754e3aab" target="_blank" title="spring源碼：bean的創建">
+spring源碼：bean的創建
+</a>
+</h4>
+<p class="post-excerpt">
+<a href="https://www.twblogs.net/a/5efe16d75352062f754e3aab" target="_blank" title="spring源碼：bean的創建">
+spring源碼：bean的創建createBean()源碼doCreateBean()源碼1.bean的實例化autowireConstructor()方法instantiateBean()無參構造instantiate()真正
+</a>
+</p>
+<div class="post-meta">
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/user.svg">
+<a href="https://www.twblogs.net/u/5c1fe0edbd9eee16b3dacb89">游荡人生</a>
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/clock.svg">
+<span>2020-07-03 01:18:14</span>
+</div>
+</div>
+<div class="list-item">
+<h4 class="list-item-title">
+<a href="https://www.twblogs.net/a/5efe16d7e53eaf40aa872145" target="_blank" title="spring源碼：bean的加載">
+spring源碼：bean的加載
+</a>
+</h4>
+<p class="post-excerpt">
+<a href="https://www.twblogs.net/a/5efe16d7e53eaf40aa872145" target="_blank" title="spring源碼：bean的加載">
+spring源碼：bean的加載
+測試代碼
+//xml配置文件的解析
+ClassPathResource resource = new ClassPathResource("spring.xml");
+BeanFactory
+</a>
+</p>
+<div class="post-meta">
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/user.svg">
+<a href="https://www.twblogs.net/u/5c1fe0edbd9eee16b3dacb89">游荡人生</a>
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/clock.svg">
+<span>2020-07-03 01:18:14</span>
+</div>
+</div>
+<div class="list-item">
+<h4 class="list-item-title">
+<a href="https://www.twblogs.net/a/5efe16d65352062f754e3aa8" target="_blank" title="spring5.0源碼導入idea步驟和問題">
+spring5.0源碼導入idea步驟和問題
+</a>
+</h4>
+<p class="post-excerpt">
+<a href="https://www.twblogs.net/a/5efe16d65352062f754e3aa8" target="_blank" title="spring5.0源碼導入idea步驟和問題">
+詳細步驟
+https://blog.csdn.net/bskfnvjtlyzmv867/article/details/81171802
+出現問題
+spring-core缺少cglib和objenesis包：
+https://b
+</a>
+</p>
+<div class="post-meta">
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/user.svg">
+<a href="https://www.twblogs.net/u/5c1fe0edbd9eee16b3dacb89">游荡人生</a>
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/clock.svg">
+<span>2020-07-03 01:18:14</span>
+</div>
+</div>
+<div class="list-item">
+<h4 class="list-item-title">
+<a href="https://www.twblogs.net/a/5efdb08cd33e2533b01488ff" target="_blank" title="spring5.1.x源碼解析之一(new XmlBeanFactory())">
+spring5.1.x源碼解析之一(new XmlBeanFactory())
+</a>
+</h4>
+<p class="post-excerpt">
+<a href="https://www.twblogs.net/a/5efdb08cd33e2533b01488ff" target="_blank" title="spring5.1.x源碼解析之一(new XmlBeanFactory())">
+/*
+這裏分別使用
+裝飾者模式:使用EncodedResource包裝Resource,對編碼進行處理
+策略模式:Resource針對不同的資源實現了,實現了不同的策略
+*/
+@Override
+public
+</a>
+</p>
+<div class="post-meta">
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/user.svg">
+<a href="https://www.twblogs.net/u/5b7c8d062b71770a43db85ca">Nuan_Feng</a>
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/clock.svg">
+<span>2020-07-02 18:01:41</span>
+</div>
+</div>
+<div class="list-item">
+<h4 class="list-item-title">
+<a href="https://www.twblogs.net/a/5efdb08ad33e2533b01488fe" target="_blank" title="spring5.1.x源碼解析之七(spring-mybatis)">
+spring5.1.x源碼解析之七(spring-mybatis)
+</a>
+</h4>
+<p class="post-excerpt">
+<a href="https://www.twblogs.net/a/5efdb08ad33e2533b01488fe" target="_blank" title="spring5.1.x源碼解析之七(spring-mybatis)">
+文章目錄spring整合mybatis查看SqlSessionFactoryBean初始化前做了啥MapperFactoryBean的加載使用自動掃描生成mapper代理注入sqlSessionFactory
+mybatis小de
+</a>
+</p>
+<div class="post-meta">
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/user.svg">
+<a href="https://www.twblogs.net/u/5b7c8d062b71770a43db85ca">Nuan_Feng</a>
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/clock.svg">
+<span>2020-07-02 18:01:41</span>
+</div>
+</div>
+<div class="list-item">
+<h4 class="list-item-title">
+<a href="https://www.twblogs.net/a/5efdb08b99927402d4fc898c" target="_blank" title="spring5.1.x源碼解析之五(AOP)">
+spring5.1.x源碼解析之五(AOP)
+</a>
+</h4>
+<p class="post-excerpt">
+<a href="https://www.twblogs.net/a/5efdb08b99927402d4fc898c" target="_blank" title="spring5.1.x源碼解析之五(AOP)">
+文章目錄
+編寫bean
+@AllArgsConstructor
+@Data
+@NoArgsConstructor
+public class MyBeanTest implements InitializingBean, Dispo
+</a>
+</p>
+<div class="post-meta">
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/user.svg">
+<a href="https://www.twblogs.net/u/5b7c8d062b71770a43db85ca">Nuan_Feng</a>
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/clock.svg">
+<span>2020-07-02 18:01:41</span>
+</div>
+</div>
+<div class="list-item">
+<h4 class="list-item-title">
+<a href="https://www.twblogs.net/a/5efdb0896acbc4367a249a9f" target="_blank" title="spring5.1.x源碼解析之三(new ApplicationContext())">
+spring5.1.x源碼解析之三(new ApplicationContext())
+</a>
+</h4>
+<p class="post-excerpt">
+<a href="https://www.twblogs.net/a/5efdb0896acbc4367a249a9f" target="_blank" title="spring5.1.x源碼解析之三(new ApplicationContext())">
+文章目錄
+之後有時間整理時序圖,類圖.分別顯示執行邏輯以及類的層次
+/*
+設置文件路徑
+刷新上下文
+*/
+public ClassPathXmlApplicationContext(
+String[] conf
+</a>
+</p>
+<div class="post-meta">
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/user.svg">
+<a href="https://www.twblogs.net/u/5b7c8d062b71770a43db85ca">Nuan_Feng</a>
+<img src="./spring事務中的超時時間很多人都不理解 - 台部落_files/clock.svg">
+<span>2020-07-02 18:01:41</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="secondary-content feed" style="height: auto !important;">
+<div class="sidebar author-info">
+<a href="https://www.twblogs.net/u/5c6d97ebbd9eee5bea9dff9b" target="_blank">
+<span id="user-icon">
+黄
+</span>
+黄山技术猿
+</a>
+</div>
+<div class="right_sidebar">
+<div>
+<div class="section-head">
+24小時熱門文章
+</div>
+<div>
+<section class="section-item">
+<ul>
+</ul>
+</section>
+</div>
+</div>
+</div>
+<div class="right_sidebar" style="height: auto !important;">
+<ins class="adsbygoogle" style="display: block; height: 600px; overflow: hidden;" data-ad-client="ca-pub-2073744953016040" data-ad-slot="3358264730" data-ad-format="auto" data-full-width-responsive="true" data-adsbygoogle-status="done" data-ad-status="filled"><ins id="aswift_1_expand" style="border: none; height: 600px; width: 272px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;" tabindex="0" title="Advertisement" aria-label="Advertisement"><ins id="aswift_1_anchor" style="border: none; height: 600px; width: 272px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block; overflow: visible;"><iframe id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;border:0;width:272px !IMPORTANT;height:600px !IMPORTANT" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="272" height="600" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/ads(2).html" data-google-container-id="a!2" data-google-query-id="CJqUiJrL3fcCFY4gYAodMTUFvg" data-load-complete="true"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+<div class="right_sidebar">
+<div>
+<div class="section-head">
+最新文章
+</div>
+<div>
+<section class="section-item">
+<ul>
+<li>
+<h5>
+<a href="https://www.twblogs.net/a/5eaacdeb6052e15273fd9627" target="_blank" class="news-link">
+帶有@Transactional和@Async的循環依賴問題
+</a>
+</h5>
+</li>
+<li>
+<h5>
+<a href="https://www.twblogs.net/a/5e98d5806052e1406bdcf984" target="_blank" class="news-link">
+spring事務中的超時時間很多人都不理解
+</a>
+</h5>
+</li>
+<li>
+<h5>
+<a href="https://www.twblogs.net/a/5e4e5b43bd9eee101df4c60d" target="_blank" class="news-link">
+spring中動態數據源切換失效問題剖析
+</a>
+</h5>
+</li>
+<li>
+<h5>
+<a href="https://www.twblogs.net/a/5d839e04bd9eee541c349ebb" target="_blank" class="news-link">
+ApplicationContextAware接口的setApplicationContext方法調用過程
+</a>
+</h5>
+</li>
+<li>
+<h5>
+<a href="https://www.twblogs.net/a/5d839e04bd9eee53270002e8" target="_blank" class="news-link">
+源碼分析FactoryBean接口不爲人知的祕密
+</a>
+</h5>
+</li>
+</ul>
+</section>
+</div>
+</div>
+</div>
+<div class="right_sidebar">
+<div>
+<div class="section-head">
+最新評論文章
+</div>
+<div>
+<section class="section-item">
+<ul>
+<li>
+<h5>
+<a href="https://www.twblogs.net/a/6277fe00b5f6234a4a5f4ef2" target="_blank" class="news-link">
+私立學校可以為您的孩子提供更好的教育
+</a>
+</h5>
+</li>
+<li>
+<h5>
+<a href="https://www.twblogs.net/a/626cfc0a0d16c035e94ae43c" target="_blank" class="news-link">
+笳癩qw9886長髮 皮膚白嫩 穴穴緊 很會夾 床上 服務主動型 不趕時間
+</a>
+</h5>
+</li>
+<li>
+<h5>
+<a href="https://www.twblogs.net/a/6279cc673d27b0f580f6efa9" target="_blank" class="news-link">
+尷尬，美國又「坑隊友」了
+</a>
+</h5>
+</li>
+<li>
+<h5>
+<a href="https://www.twblogs.net/a/61bc5f624cd7430f30b0747b" target="_blank" class="news-link">
+實用機器學習筆記一：概述
+</a>
+</h5>
+</li>
+<li>
+<h5>
+<a href="https://www.twblogs.net/a/626cb5cb7f5f535c3a412410" target="_blank" class="news-link">
+瑞芯微CORTEX-A55丨iTOP-RK3568開發板
+</a>
+</h5>
+</li>
+<li>
+<h5>
+<a href="https://www.twblogs.net/a/61c141c933c5e973a959e5a1" target="_blank" class="news-link">
+智慧家庭場景的推薦系統的發展歷程和方向 | InfoQ《公開課》
+</a>
+</h5>
+</li>
+<li>
+<h5>
+<a href="https://www.twblogs.net/a/60cbe2f57f8319e4a6f4cac9" target="_blank" class="news-link">
+拍樂雲 CEO 趙加雨：音視頻領域的發展與挑戰 | QCon
+</a>
+</h5>
+</li>
+</ul>
+</section>
+</div>
+</div>
+</div><div class="google-auto-placed" style="width: 100%; height: auto; clear: both; text-align: center;"><ins data-ad-format="auto" class="adsbygoogle adsbygoogle-noablate" data-ad-client="ca-pub-2073744953016040" data-adsbygoogle-status="done" style="display: block; margin: 10px auto 8px; background-color: transparent; height: 600px; overflow: hidden;" data-ad-status="filled"><ins id="aswift_4_expand" tabindex="0" title="Advertisement" aria-label="Advertisement" style="border: none; height: 600px; width: 300px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;"><ins id="aswift_4_anchor" style="border: none; height: 600px; width: 300px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block; overflow: visible;"><iframe id="aswift_4" name="aswift_4" style="left:0;position:absolute;top:0;border:0;width:300px !IMPORTANT;height:600px !IMPORTANT" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="300" height="600" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/ads(3).html" data-google-container-id="a!5" data-google-query-id="CIWDnJrL3fcCFdQrYAodb9ENqQ" data-load-complete="true"></iframe></ins></ins></ins></div>
+</div>
+</div>
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-body">
+<img src="https://www.twblogs.net/a/5e98d5806052e1406bdcf984" class="img-responsive">
+</div>
+</div>
+</div>
+</div>
+<footer>
+</footer>
+</div>
+<script>
+var post_id = "5e98d5806052e1406bdcf984";
+
+var token = getCookie('_xsrf');
+</script>
+<script>
+$.ajax({
+url: '/views',
+headers: {'X-XSRFToken' : token },
+data: {post_id: post_id },
+type: "POST",
+});
+</script>
+<script src="./spring事務中的超時時間很多人都不理解 - 台部落_files/custom_fix.js.下載"></script>
+<script>
+$(document).ready(function() {
+$('pre code').each(function(i, block) {
+hljs.highlightBlock(block);
+});
+});
+</script>
+<script src="./spring事務中的超時時間很多人都不理解 - 台部落_files/load_comments.js.下載"></script>
+<script>
+$(".article-content img").click(
+function() {
+let width;
+let img_src = $(this).attr('src');
+let img_width = this.naturalWidth;
+// let height = this.naturalHeight;
+let window_width = $(window).width() * 0.8;
+console.log(img_width,window_width)
+if (img_width <= window_width) {
+$("#myModal").addClass('modal-small')
+width = img_width;
+} else {
+$("#myModal").addClass('modal-big')
+width = window_width;
+}
+$("#myModal img").attr('src',img_src);
+$("#myModal .modal-dialog img").css('width',width);
+$("#myModal .modal-dialog img").css('height','auto');
+$('#myModal').modal('show');
+}
+)
+$('#myModal').click(
+function() {
+$('#myModal').modal('hide')
+}
+)
+const observer = lozad('img', {
+load: function(el) {
+const src = el.getAttribute('data-original')
+if (src) {
+el.src = src;
+}
+}
+});
+observer.observe();
+</script>
+<style>
+.modal-big .modal-dialog {
+position: relative;
+display: table;
+overflow-y: auto;
+overflow-x: auto;
+width: auto;
+}
+.modal-big .modal.show .modal-dialog {
+top: 50%;
+transform: translateY(-50%);
+}
+.modal-big .modal-body {
+text-align: center;
+}
+.modal-small.modal {
+text-align: center;
+padding: 0!important;
+}
+.modal-small.modal:before {
+content: '';
+display: inline-block;
+height: 100%;
+vertical-align: middle;
+margin-right: -4px;
+}
+.modal-small .modal-dialog {
+display: inline-block;
+text-align: left;
+vertical-align: middle;
+max-width: 100%;
+}
+.modal-content {
+cursor: zoom-out;
+}
+</style>
+
+<ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important; overflow: hidden;" data-ad-status="unfilled"><ins id="aswift_2_expand" style="border: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;" tabindex="0" title="Advertisement" aria-label="Advertisement"><ins id="aswift_2_anchor" style="border: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block;"><iframe id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;border:0;width:undefinedpx !IMPORTANT;height:undefinedpx !IMPORTANT" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/ads(4).html" data-google-container-id="a!3" data-load-complete="true"></iframe></ins></ins></ins><table cellspacing="0" cellpadding="0" class="gstl_50 gssb_c" style="width: 202px; display: none; top: 45px; position: absolute; left: 998px;"><tbody><tr><td class="gssb_f"></td><td class="gssb_e" style="width: 100%;"></td></tr></tbody></table><table cellspacing="0" cellpadding="0" class="gstl_51 gssb_c" style="width: 2px; display: none; top: 3px; position: absolute; left: -1px;"><tbody><tr><td class="gssb_f"></td><td class="gssb_e" style="width: 100%;"></td></tr></tbody></table><ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" data-anchor-status="displayed" style="display: block; width: 100% !important; height: 129px !important; bottom: 0px; clear: none !important; float: none !important; left: 0px; margin: 0px !important; max-height: none !important; max-width: none !important; opacity: 1; overflow: hidden; padding: 0px !important; position: fixed; right: auto !important; top: auto !important; vertical-align: baseline !important; visibility: visible !important; z-index: 2147483647; background: rgb(250, 250, 250) !important;" data-ad-status="filled" data-anchor-shown="true"><ins class="ee" style="inset: auto !important; clear: none !important; display: block !important; float: none !important; height: 5px !important; margin: 0px !important; max-height: none !important; max-width: none !important; opacity: 1 !important; overflow: visible !important; padding: 0px !important; position: relative !important; vertical-align: baseline !important; visibility: visible !important; width: auto !important; z-index: 1 !important; background-color: rgb(250, 250, 250) !important; box-shadow: rgba(0, 0, 0, 0.2) 0px -1px 5px -1px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px !important;"><span style="display: block !important; width: 80px !important; height: 45px !important; bottom: 0px !important; left: 0% !important; pointer-events: none !important;"><svg style="margin: 0px !important; position: absolute !important; bottom: 0px !important; left: 0% !important; display: block !important; width: 80px !important; height: 30px !important; transform: none !important; pointer-events: initial !important;"><defs><filter id="dropShadowTop" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><fecomponenttransfer in="SourceAlpha" result="TransferredAlpha"><fefuncr type="discrete" tableValues="0.5"></fefuncr><fefuncg type="discrete" tableValues="0.5"></fefuncg><fefuncb type="discrete" tableValues="0.5"></fefuncb></fecomponenttransfer><fegaussianblur in="TransferredAlpha" stdDeviation="2"></fegaussianblur><feoffset dx="0" dy="0" result="offsetblur"></feoffset><femerge><femergenode></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter></defs><path d="M0,26 L0,6 A6,6 0 0,1 6,1 L50,1 A6,6 0 0,1 56,6 L56,20 A6,6 0 0,0 62,26 Z" stroke="#FAFAFA" stroke-width="1" fill="#FAFAFA" style="filter: url(&quot;#dropShadowTop&quot;);"></path><rect x="0" y="25" width="80" height="5" style="fill: rgb(250, 250, 250);"></rect><g class="down" stroke="#616161" stroke-width="2px" stroke-linecap="square"><line x1="22" y1="12" x2="28" y2="18"></line><line x1="28" y1="18" x2="34" y2="12"></line></g></svg></span></ins><ins id="aswift_5_expand" tabindex="0" title="Advertisement" aria-label="Advertisement" style="border: none !important; height: 124px !important; width: 100% !important; margin: 0px !important; padding: 0px !important; position: relative !important; visibility: visible !important; background-color: transparent !important; display: inline-table !important; inset: auto !important; clear: none !important; float: none !important; max-height: none !important; max-width: none !important; opacity: 1 !important; overflow: visible !important; vertical-align: baseline !important; z-index: auto !important;"><ins id="aswift_5_anchor" style="border: none !important; height: 124px !important; width: 100% !important; margin: 0px !important; padding: 0px !important; position: relative !important; visibility: visible !important; background-color: transparent !important; display: block !important; inset: auto !important; clear: none !important; float: none !important; max-height: none !important; max-width: none !important; opacity: 1 !important; overflow: visible !important; vertical-align: baseline !important; z-index: auto !important;"><iframe id="aswift_5" name="aswift_5" style="width: 1005px !important; height: 124px !important; display: block; margin: 0px auto;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="1005" height="124" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/zrt_lookup.html" data-google-container-id="a!6" data-google-query-id="COqPiJrL3fcCFdnNTAIdqAEI2A" data-load-complete="true"></iframe></ins></ins></ins><iframe src="./spring事務中的超時時間很多人都不理解 - 台部落_files/aframe.html" width="0" height="0" style="display: none;"></iframe></body><iframe id="google_esf" name="google_esf" src="./spring事務中的超時時間很多人都不理解 - 台部落_files/zrt_lookup(1).html" style="display: none;"></iframe></html>
